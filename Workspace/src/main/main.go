@@ -1,37 +1,45 @@
 package main
 
 import (
+	"Modules/Modules/BasicTools"
+	"Modules/Modules/SpecialPrint"
 	"fmt"
-	"modules/special_print/modules/basic_tools"
-	"modules/special_print/modules/special_print"
 )
 
-func basic_demonstration() {
-	basic_tools.Vars_1()
+func basicDemonstration() {
+	BasicTools.Vars1()
 
-	basic_tools.Vars_2()
+	BasicTools.Vars2()
 
-	basic_tools.Const()
+	BasicTools.Const()
+
+	BasicTools.Array()
+
+	BasicTools.Slice1()
+
+	BasicTools.Slice2()
+
+	BasicTools.String()
 }
 
-func first_func() {
-	special_print.Print()
+func firstFunc() {
+	SpecialPrint.Print()
 
 	var name string = "Oleg"
 	//fmt.Fscan(os.Stdin, &name)
 
-	special_print.PrintName(name)
+	SpecialPrint.PrintName(name)
 }
 
-func run_first() {
+func runFirst() {
 	fmt.Println("Hello, World!")
 
 }
 
 func main() {
-	run_first()
+	runFirst()
 
-	first_func()
+	firstFunc()
 
-	basic_demonstration()
+	basicDemonstration()
 }

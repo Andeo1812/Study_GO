@@ -1,8 +1,8 @@
-package basic_tools
+package BasicTools
 
 import "fmt"
 
-func Vars_1() {
+func Vars1() {
 	fmt.Println("Vars_1")
 	//  Значение по умолчанию. Для int = 0
 	var num_0 int

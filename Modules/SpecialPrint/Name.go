@@ -1,4 +1,4 @@
-package special_print
+package SpecialPrint
 
 import (
 	"fmt"

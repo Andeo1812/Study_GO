@@ -1,4 +1,4 @@
-package basic_tools
+package BasicTools
 
 import "fmt"
 

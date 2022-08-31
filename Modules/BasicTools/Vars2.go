@@ -1,8 +1,8 @@
-package basic_tools
+package BasicTools
 
 import "fmt"
 
-func Vars_2() {
+func Vars2() {
 	fmt.Println("Vars_2")
 	//  int
 	//  int - платформозависимый тип, 32/64
@@ -49,8 +49,8 @@ func Vars_2() {
 
 	//  complex
 	//  complex64, complex128
-	var c_0 complex128 = -1.1 + 7.12i
-	c_1 := -1.1 + 7.12i
+	var c0 complex128 = -1.1 + 7.12i
+	c1 := -1.1 + 7.12i
 
-	fmt.Println(c_0, c_1)
+	fmt.Println(c0, c1)
 }

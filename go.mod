@@ -1,3 +1,3 @@
-module modules/special_print
+module Modules
 
 go 1.19
