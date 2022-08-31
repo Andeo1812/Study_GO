@@ -1,4 +1,4 @@
-package BasicTools
+package BasicFunctional
 
 import "fmt"
 

@@ -1,25 +1,33 @@
 package main
 
 import (
-	"Modules/Modules/BasicTools"
+	"Modules/Modules/BasicFunctional"
 	"Modules/Modules/SpecialPrint"
 	"fmt"
 )
 
 func basicDemonstration() {
-	BasicTools.Vars1()
+	BasicFunctional.Vars1()
 
-	BasicTools.Vars2()
+	BasicFunctional.Vars2()
 
-	BasicTools.Const()
+	BasicFunctional.Const()
 
-	BasicTools.Array()
+	BasicFunctional.Array()
 
-	BasicTools.Slice1()
+	BasicFunctional.Slice1()
 
-	BasicTools.Slice2()
+	BasicFunctional.Slice2()
 
-	BasicTools.String()
+	BasicFunctional.String()
+
+	BasicFunctional.Map()
+
+	BasicFunctional.Types()
+
+	BasicFunctional.Pointers()
+
+	BasicFunctional.Control()
 }
 
 func firstFunc() {
