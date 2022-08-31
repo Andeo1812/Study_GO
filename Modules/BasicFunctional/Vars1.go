@@ -5,15 +5,15 @@ import "fmt"
 func Vars1() {
 	fmt.Println("Vars_1")
 	//  Значение по умолчанию. Для int = 0
-	var num_0 int
+	var num0 int
 
 	//  Значение при инициализации
-	var num_1 int = 1
+	var num1 int = 1
 
 	//  Пропуск типа
-	var num_2 = 20
+	var num2 = 20
 
-	fmt.Printf("%d %d %d\n", num_0, num_1, num_2)
+	fmt.Printf("%d %d %d\n", num0, num1, num2)
 
 	//  Короткое объявление
 	num__ := 30
