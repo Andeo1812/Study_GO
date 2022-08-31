@@ -28,6 +28,8 @@ func basicDemonstration() {
 	BasicFunctional.Pointers()
 
 	BasicFunctional.Control()
+
+	BasicFunctional.Loop()
 }
 
 func firstFunc() {
