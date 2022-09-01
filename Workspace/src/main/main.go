@@ -2,11 +2,12 @@ package main
 
 import (
 	"Modules/Modules/BasicFunctional"
+	"Modules/Modules/Functions"
 	"Modules/Modules/SpecialPrint"
 	"fmt"
 )
 
-func basicDemonstration() {
+func basicDemo() {
 	BasicFunctional.Vars1()
 
 	BasicFunctional.Vars2()
@@ -32,6 +33,16 @@ func basicDemonstration() {
 	BasicFunctional.Loop()
 }
 
+func functionsDemo() {
+	Functions.Functions()
+
+	Functions.FirstClass()
+
+	Functions.Defer()
+
+	Functions.Recover()
+}
+
 func firstFunc() {
 	SpecialPrint.Print()
 
@@ -51,5 +62,7 @@ func main() {
 
 	firstFunc()
 
-	basicDemonstration()
+	basicDemo()
+
+	functionsDemo()
 }
