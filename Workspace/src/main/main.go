@@ -3,6 +3,7 @@ package main
 import (
 	"Modules/Modules/BasicFunctional"
 	"Modules/Modules/Functions"
+	"Modules/Modules/Interface"
 	"Modules/Modules/SpecialPrint"
 	"Modules/Modules/Structs"
 	"fmt"
@@ -46,6 +47,28 @@ func functionsDemo() {
 
 func structsDemo() {
 	Structs.Structs()
+
+	Structs.Methods()
+}
+
+func interfaceDemo() {
+	Interface.Basic()
+
+	Interface.Embed()
+
+	Interface.Many()
+
+	Interface.Cast()
+}
+
+func demo() {
+	basicDemo()
+
+	functionsDemo()
+
+	structsDemo()
+
+	interfaceDemo()
 }
 
 func firstFunc() {
@@ -66,9 +89,5 @@ func main() {
 
 	firstFunc()
 
-	basicDemo()
-
-	functionsDemo()
-
-	structsDemo()
+	demo()
 }
