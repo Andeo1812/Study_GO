@@ -1,53 +1,33 @@
-# Входная точка изучения Golang
+# Async functional Go
 
-## Материалы для дополнительного чтения на английском:
+## На русском:
 
-* https://golang.org/ref/spec - спецификация по язык
-* https://golang.org/ref/mem - модель памяти го. на начальном этапе не надо, но знать полезно
-* https://golang.org/doc/code.html - про организацию кода. GOPATH и пакеты
-* https://golang.org/cmd/go/
-* https://blog.golang.org/strings
-* https://blog.golang.org/slices
-* https://blog.golang.org/go-slices-usage-and-internals
-* https://github.com/golang/go/wiki - вики го на гитхабе. очень много полезной информации
-* https://blog.golang.org/go-maps-in-action
-* https://blog.golang.org/organizing-go-code
-* https://golang.org/doc/effective_go.html - основной сборник тайного знания, сюда вы будуте обращатсья в первое время часто
-* https://github.com/golang/go/wiki/CodeReviewComments как ревьювить (и писать код). обязательно к прочтению
-* https://divan.github.io/posts/avoid_gotchas/ - материал аналогичный 50 оттенков го
-* https://research.swtch.com/interfaces
-* https://research.swtch.com/godata
-* http://jordanorelli.com/post/42369331748/function-types-in-go-golang
-* https://www.devdungeon.com/content/working-files-go - работа с файлами
-* http://www.golangprograms.com - много how-to касательно базовых вещей в go
-* http://yourbasic.org/golang/ - ещё большой набор how-to где можно получить углублённую информацию по всем базовым вещам. очень полезны http://yourbasic.org/golang/blueprint/
-* https://github.com/Workiva/go-datastructures
-* https://github.com/enocom/gopher-reading-list - большая подборка статей по многим темам ( не только данной лекции )
+* https://habrahabr.ru/post/141853/ - как работают горутины
+* https://habrahabr.ru/post/308070/ - как работают каналы
+* https://habrahabr.ru/post/333654/ - как работает планировщик ( https://rakyll.org/scheduler/ )
+* https://habrahabr.ru/post/271789/ - танцы с мютексами
 
-## Материалы для дополнительного чтения на русском:
+## На английском:
 
-* https://habrahabr.ru/company/mailru/blog/314804/ - 50 оттенков го. обязательно к прочтению. многое оттуда мы ещё не проходили, но на будущее - имейте ввиду
-* https://habrahabr.ru/post/306914/ - Разбираемся в Go: пакет io
-* https://habrahabr.ru/post/272383/ - постулаты go. Маленькая статья об основными принципах языка
-* https://habrahabr.ru/company/mailru/blog/301036/ - лучшие практики go
-* https://habrahabr.ru/post/308198/ - организация кода в go
-* https://habrahabr.ru/post/339192/ - Зачем в Go амперсанд и звёздочка (& и *)
-* https://habrahabr.ru/post/325468/ - как не наступать на грабли в Go
-* https://habrahabr.ru/post/276981/ - Краш-курс по интерфейсам в Go
-* http://golang-book.ru
+* https://blog.golang.org/race-detector
+* https://blog.golang.org/pipelines
+* https://blog.golang.org/advanced-go-concurrency-patterns
+* https://blog.golang.org/go-concurrency-patterns-timing-out-and
+* https://talks.golang.org/2012/concurrency.slide#1
+* https://www.goinggo.net/2017/10/the-behavior-of-channels.html
+* http://marcio.io/2015/07/handling-1-million-requests-per-minute-with-golang/ - рассказ про оптимизацию воркер пула
+* http://www.tapirgames.com/blog/golang-channel
+* http://www.tapirgames.com/blog/golang-channel-closing
+* https://github.com/golang/go/wiki/CommonMistakes
 
-## Литература по го на русском языке:
+## Видео:
 
-* Язык программирования Go, Алан А. А. Донован, Брайан У. Керниган
-* Go на практике, Matt Butcher, Мэтт Фарина Мэтт
-* Программирование на Go. Разработка приложений XXI века, Марк Саммерфильд
+* https://www.youtube.com/watch?v=5buaPyJ0XeQ - классное выступление Dave Cheney про функции первого класса и использование их с горутинами, очень рекомендую, оно небольшое
+* https://www.youtube.com/watch?v=f6kdp27TYZs - Google I/O 2012 - Go Concurrency Patterns - очень рекомендую
+* https://www.youtube.com/watch?v=rDRa23k70CU&list=PLDWZ5uzn69eyM81omhIZLzvRhTOXvpeX9&index=15 - ещё одно хорошее видео про паттерны конкуренции в го
+* https://www.youtube.com/watch?v=KAWeC9evbGM - видео Андрея Смирнова с конференции Highload - в нём вы можете получить более детальную информацию по теме вводного видео (методы обработки запросов и плюсы неблокирующего подхода), о том, что там творится на системном уровне. На русском, не про go
 
-## Дополнительные упражнения:
+## Книги:
 
-* https://go-tour-ru-ru.appspot.com/list - упражнения на овладение базовым синтаксисом, на случай если вам нужна небольшая практика перед первым заданием курса
-
-## Онлайн тренажеры:
-
-* https://tour.golang.org/ - библия начинающего гофера
-* https://gobyexample.com/ - достаточно большая коллекция примеров, на данном этапе достаточно изучить всё до примера Errors
-* https://github.com/go-park-mail-ru/lectures/tree/master/1-basics - код из лекций
+* Язык программирования Go, Алан А. А. Донован, Брайан У. Керниган - глава 8
+* Concurrency in Go: Tools and Techniques for Developers, by Katherine Cox-Buday
