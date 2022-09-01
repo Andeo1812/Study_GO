@@ -4,6 +4,7 @@ import (
 	"Modules/Modules/BasicFunctional"
 	"Modules/Modules/Functions"
 	"Modules/Modules/SpecialPrint"
+	"Modules/Modules/Structs"
 	"fmt"
 )
 
@@ -43,6 +44,10 @@ func functionsDemo() {
 	Functions.Recover()
 }
 
+func structsDemo() {
+	Structs.Structs()
+}
+
 func firstFunc() {
 	SpecialPrint.Print()
 
@@ -54,7 +59,6 @@ func firstFunc() {
 
 func runFirst() {
 	fmt.Println("Hello, World!")
-
 }
 
 func main() {
@@ -65,4 +69,6 @@ func main() {
 	basicDemo()
 
 	functionsDemo()
+
+	structsDemo()
 }
