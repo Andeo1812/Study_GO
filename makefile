@@ -1,8 +1,14 @@
-.PHONY: all run
+.PHONY: all run download run_tests
 
 all: run
 
-TARGET = ./Workspace/src/main/main.go
+TARGET = ./Project/main.go
 
 run:
 	go run ${TARGET}
+
+download:
+	go mod download
+
+run_tests:
+	go test ./... -cover -coverpkg ./...

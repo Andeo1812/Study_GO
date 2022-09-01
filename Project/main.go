@@ -1,11 +1,11 @@
 package main
 
 import (
-	"Modules/Modules/BasicFunctional"
-	"Modules/Modules/Functions"
-	"Modules/Modules/Interface"
-	"Modules/Modules/SpecialPrint"
-	"Modules/Modules/Structs"
+	"Modules/Project/BasicFunctional"
+	"Modules/Project/Functions"
+	"Modules/Project/Interface"
+	"Modules/Project/SpecialPrint"
+	"Modules/Project/Structs"
 	"fmt"
 )
 
