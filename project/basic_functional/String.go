@@ -1,4 +1,4 @@
-package BasicFunctional
+package basic_functional
 
 import (
 	"fmt"

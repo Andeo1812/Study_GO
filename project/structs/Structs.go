@@ -1,4 +1,4 @@
-package Structs
+package structs
 
 import "fmt"
 
@@ -16,7 +16,7 @@ type Account struct {
 }
 
 func Structs() {
-	fmt.Println("Structs")
+	fmt.Println("structs")
 
 	//  Полное объявление
 	var acc Account = Account{

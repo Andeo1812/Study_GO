@@ -1,4 +1,4 @@
-package Functions
+package functions
 
 import "fmt"
 
@@ -12,7 +12,7 @@ func multiIn(a, b int, c int) int {
 	return a * b * c
 }
 
-//  Именованный результат
+// Именованный результат
 func namedReturn() (out int) {
 	//  out = 0
 	out = 2
@@ -20,7 +20,7 @@ func namedReturn() (out int) {
 	return
 }
 
-//  Несколько результатов
+// Несколько результатов
 func mulriReturn(in int) (int, error) {
 	if in > 2 {
 		return 0, fmt.Errorf("some error happend")
@@ -29,7 +29,7 @@ func mulriReturn(in int) (int, error) {
 	return in, nil
 }
 
-//  Несколько именованных резульатов
+// Несколько именованных резульатов
 func multiNamedReturn(ok bool) (res int, err error) {
 	res = 1
 	if ok {
@@ -54,7 +54,7 @@ func sum(in ...int) (result int) {
 }
 
 func Functions() {
-	fmt.Println("Functions")
+	fmt.Println("functions")
 
 	sum(1, 23, 44, 55, 101)
 
