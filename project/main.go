@@ -1,6 +1,8 @@
 package main
 
-import "Modules/project/waitgroup"
+import (
+	"Modules/project/once"
+)
 
 func asyncDemo() {
 	//  gorutines.Goroutines()
@@ -37,7 +39,7 @@ func asyncDemo() {
 
 	//  waitgroup.Waitgroup2()
 
-	waitgroup.Ratelim()
+	//  waitgroup.Ratelim()
 
 	//  atomic_.BadRace()
 
@@ -48,6 +50,8 @@ func asyncDemo() {
 	//  race.Race2()
 
 	//  race.Race3()
+
+	once.Once()
 }
 
 func main() {
