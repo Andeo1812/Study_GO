@@ -1,13 +1,13 @@
 # Async functional Go
 
-## На русском:
+## Материалы на русском:
 
 * https://habrahabr.ru/post/141853/ - как работают горутины
 * https://habrahabr.ru/post/308070/ - как работают каналы
 * https://habrahabr.ru/post/333654/ - как работает планировщик ( https://rakyll.org/scheduler/ )
 * https://habrahabr.ru/post/271789/ - танцы с мютексами
 
-## На английском:
+## Материалы на английском:
 
 * https://blog.golang.org/race-detector
 * https://blog.golang.org/pipelines
