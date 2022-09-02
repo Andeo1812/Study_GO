@@ -15,19 +15,31 @@ const (
 )
 
 func startWorker_(in int, wg *sync.WaitGroup, quotaCh chan struct{}) {
+	fmt.Println("start worker", in)
+
 	quotaCh <- struct{}{} // ratelim.go, берём свободный слот
+
+	// ratelim.go, возвращаем слот
+	defer func() {
+		<-quotaCh
+	}()
 
 	defer wg.Done()
 	for j := 0; j < iterationsNum_; j++ {
+		//  Целиком обработка 2 операций
+		//if j % 2 == 0 {
+		//	<-quotaCh
+		//	quotaCh <- struct{}{}
+		//}
+
 		fmt.Printf(formatWork_(in, j))
 
 		<-quotaCh
 		quotaCh <- struct{}{}
 
-		runtime.Gosched() // даём поработать другим горутинам
+		runtime.Gosched() // даём поработать другим горутинам явно с лимитом по числу горутин quotaLinit = 2
 	}
 
-	<-quotaCh // ratelim.go, возвращаем слот
 }
 
 func Ratelim() {

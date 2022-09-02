@@ -1,14 +1,20 @@
-.PHONY: all run download run_tests
+.PHONY: all launch download run_tests
 
-all: run
+all: launch
 
 TARGET = ./project/main.go
 
-run:
+launch:
 	go run ${TARGET}
+
+build:
+	go build ${TARGET}
+
+launch_race:
+	go run -race ${TARGET}
 
 download:
 	go mod download
 
 run_tests:
-	go test ./... -cover -coverpkg ./...
+	go test -race ./... -cover -coverpkg ./...

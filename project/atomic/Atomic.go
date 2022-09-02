@@ -12,12 +12,15 @@ func inc_() {
 	atomic.AddInt32(&totalOperations_, 1) // атомарно
 }
 
-func Atomic2() {
+func Atomic() {
 	for i := 0; i < 1000; i++ {
 		go inc_()
 	}
 
 	time.Sleep(2 * time.Millisecond)
 
-	fmt.Println("total operation = ", totalOperations_)
+	//  race found
+	//  fmt.Println("total operation = ", totalOperations_)
+
+	fmt.Println("total operation = ", atomic.LoadInt32(&totalOperations_))
 }

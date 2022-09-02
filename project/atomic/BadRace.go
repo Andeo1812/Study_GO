@@ -11,7 +11,7 @@ func inc() {
 	totalOperations++
 }
 
-func Atomic1() {
+func BadRace() {
 	for i := 0; i < 1000; i++ {
 		go inc()
 	}
