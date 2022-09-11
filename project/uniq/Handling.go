@@ -1,7 +1,12 @@
 package uniq
 
+import "fmt"
+
 func Handling() {
 	options := getOptions()
 
-	getData(options.inputFile)
+	lines := getData(options.inputFile)
+
+	fmt.Println(lines)
+
 }
