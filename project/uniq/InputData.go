@@ -14,10 +14,10 @@ func inputData(path string) {
 
 	defer stream.Close()
 
-	scanner(stream)
+	getLines(stream)
 }
 
-func scanner(flow *os.File) {
+func getLines(flow *os.File) {
 	scanner := bufio.NewScanner(flow)
 
 	for scanner.Scan() {
@@ -26,5 +26,13 @@ func scanner(flow *os.File) {
 
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
+	}
+}
+
+func getData(inputFile string) {
+	if inputFile != "" {
+		inputData(inputFile)
+	} else {
+		getLines(os.Stdin)
 	}
 }
