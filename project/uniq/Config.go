@@ -1,6 +1,11 @@
 package uniq
 
-// Flags
+// Error cods
+const (
+	wrongCombinationFlags = 4
+)
+
+// FlagsData
 const (
 	showCountStrUsage = "Подсчитать количество повторов строки во входных данных. Вывести это число перед строкой отделив пробелом."
 	showCountStrFlag  = "c"

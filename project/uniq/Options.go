@@ -3,6 +3,7 @@ package uniq
 import (
 	"flag"
 	"fmt"
+	"os"
 )
 
 type options struct {
@@ -33,23 +34,31 @@ func getFlags() options {
 	o.inputFile = flag.Arg(0)
 	o.outputFile = flag.Arg(1)
 
+	o.checkOptions()
+
 	return o
 }
 
-func Init() {
-	options := getFlags()
+func (o *options) checkOptions() {
+	var countKeys int
 
-	fmt.Println(options.showCountStr)
+	if o.showCountStr {
+		countKeys++
+	}
 
-	fmt.Println(options.showUnUniqStr)
+	if o.showUnUniqStr {
+		countKeys++
+	}
 
-	fmt.Println(options.showUniqStr)
+	if o.showUniqStr {
+		countKeys++
+	}
 
-	fmt.Println(options.skipCountWords)
+	if countKeys > 1 {
+		format := "Only one of the keys: -%s, -%s, -%s is possible\n"
 
-	fmt.Println(options.skipCountChars)
+		fmt.Printf(format, showCountStrFlag, showUnUniqStrFlag, showUniqStrFlag)
 
-	fmt.Println(options.inputFile)
-
-	fmt.Println(options.outputFile)
+		os.Exit(wrongCombinationFlags)
+	}
 }

@@ -3,5 +3,5 @@ package main
 import "Modules/project/uniq"
 
 func main() {
-	uniq.Init()
+	uniq.Handling()
 }
