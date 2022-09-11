@@ -17,7 +17,7 @@ type options struct {
 	outputFile           string
 }
 
-func getFlags() options {
+func getOptions() options {
 	var o options
 
 	flag.BoolVar(&o.showCountStr, showCountStrFlag, o.showCountStr, showCountStrUsage)

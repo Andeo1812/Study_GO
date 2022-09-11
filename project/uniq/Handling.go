@@ -1,7 +1,7 @@
 package uniq
 
 func Handling() {
-	options := getFlags()
+	options := getOptions()
 
 	getData(options.inputFile)
 }
