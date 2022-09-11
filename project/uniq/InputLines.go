@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func inputData(path string) (res *[]string) {
+func inputLines(path string) (res *[]string) {
 	stream, err := os.Open(path)
 	if err != nil {
 		panic(err)
@@ -14,12 +14,12 @@ func inputData(path string) (res *[]string) {
 
 	defer stream.Close()
 
-	res = getLines(stream)
+	res = scanLines(stream)
 
 	return res
 }
 
-func getLines(flow *os.File) (res *[]string) {
+func scanLines(flow *os.File) (res *[]string) {
 	scanner := bufio.NewScanner(flow)
 
 	var buf []string
@@ -35,13 +35,13 @@ func getLines(flow *os.File) (res *[]string) {
 	return &buf
 }
 
-func getData(inputFile string) (res *[]string) {
+func getLines(inputFile string) (res *[]string) {
 	if inputFile != "" {
-		res = inputData(inputFile)
+		res = inputLines(inputFile)
 		return res
 	}
 
-	res = getLines(os.Stdin)
+	res = scanLines(os.Stdin)
 
 	return res
 }

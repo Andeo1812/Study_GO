@@ -19,7 +19,7 @@ func createSetup(opt *options, data *[]string) setup {
 func Handling() {
 	options := getOptions()
 
-	lines := getData(options.inputFile)
+	lines := getLines(options.inputFile)
 
 	var setup setup = createSetup(&options, lines)
 
