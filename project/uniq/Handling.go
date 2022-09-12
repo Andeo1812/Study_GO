@@ -19,9 +19,23 @@ func Handling() {
 
 	lines := getLines(options.inputFile)
 
-	//  fmt.Println(lines)
-
 	linesTable := analysisData(lines)
 
-	showLines(options.outputFile, simple, &linesTable)
+	if options.showCountStr {
+		showLines(options.outputFile, showAll, &linesTable)
+
+		return
+	}
+
+	if options.showUniqStr {
+		showLines(options.outputFile, showUniq, &linesTable)
+
+		return
+	}
+
+	if options.showUnUniqStr {
+		showLines(options.outputFile, showUnUniq, &linesTable)
+
+		return
+	}
 }

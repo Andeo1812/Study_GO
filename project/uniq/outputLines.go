@@ -5,13 +5,29 @@ import (
 	"strconv"
 )
 
-var simple outputRuleType = func(flow *os.File, table *map[string]int) {
+type outputRuleType func(*os.File, *map[string]int)
+
+var showAll outputRuleType = func(flow *os.File, table *map[string]int) {
 	for key, val := range *table {
 		flow.WriteString(key + " " + strconv.Itoa(val) + "\n")
 	}
 }
 
-type outputRuleType func(*os.File, *map[string]int)
+var showUniq outputRuleType = func(flow *os.File, table *map[string]int) {
+	for key, val := range *table {
+		if val == 1 {
+			flow.WriteString(key + " " + strconv.Itoa(val) + "\n")
+		}
+	}
+}
+
+var showUnUniq outputRuleType = func(flow *os.File, table *map[string]int) {
+	for key, val := range *table {
+		if val != 1 {
+			flow.WriteString(key + " " + strconv.Itoa(val) + "\n")
+		}
+	}
+}
 
 func showLines(path string, outputRule outputRuleType, table *map[string]int) {
 	var stream *os.File = os.Stdout
@@ -30,5 +46,4 @@ func showLines(path string, outputRule outputRuleType, table *map[string]int) {
 	}
 
 	outputRule(stream, table)
-
 }
