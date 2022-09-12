@@ -4,15 +4,44 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
-func scanLines(flow *os.File) (res *[]string) {
+func skipInput(line string, skipWords int, skipSymbols int) string {
+	for i := 0; i < skipWords; i++ {
+		indexSpace := strings.Index(line, " ")
+		if indexSpace == -1 {
+			return ""
+		}
+
+		curLength := len(line)
+
+		if indexSpace+1 <= curLength-indexSpace+1 {
+			line = line[indexSpace+1 : curLength-indexSpace+1]
+		} else {
+			return ""
+		}
+	}
+
+	if skipSymbols < len(line) {
+		line = line[skipSymbols : len(line)-skipWords]
+	} else {
+		return ""
+	}
+
+	return line
+}
+
+func scanLines(flow *os.File, skipWords int, skipSymbols int) (res *[]string) {
 	scanner := bufio.NewScanner(flow)
 
 	var buf []string
 
 	for scanner.Scan() {
-		buf = append(buf, scanner.Text())
+		var line string = skipInput(scanner.Text(), skipWords, skipSymbols)
+		if line != "" {
+			buf = append(buf, line)
+		}
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -22,7 +51,7 @@ func scanLines(flow *os.File) (res *[]string) {
 	return &buf
 }
 
-func getLines(path string) (res *[]string) {
+func getLines(path string, skipWords int, skipSymbols int) (res *[]string) {
 	var stream *os.File = os.Stdin
 
 	if path != "" {
@@ -33,8 +62,8 @@ func getLines(path string) (res *[]string) {
 
 		defer stream.Close()
 
-		return scanLines(stream)
+		return scanLines(stream, skipWords, skipSymbols)
 	}
 
-	return scanLines(stream)
+	return scanLines(stream, skipWords, skipSymbols)
 }

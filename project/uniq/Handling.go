@@ -17,7 +17,7 @@ func analysisData(lines *[]string) map[string]int {
 func Handling() {
 	options := getOptions()
 
-	lines := getLines(options.inputFile)
+	lines := getLines(options.inputFile, options.skipCountWords, options.skipCountSymbols)
 
 	linesTable := analysisData(lines)
 

@@ -11,8 +11,8 @@ type options struct {
 	showUnUniqStr        bool
 	showUniqStr          bool
 	registerNotImportant bool
-	skipCountWords       uint
-	skipCountChars       uint
+	skipCountWords       int
+	skipCountSymbols     int
 	inputFile            string
 	outputFile           string
 }
@@ -26,8 +26,8 @@ func getOptions() options {
 
 	flag.BoolVar(&o.registerNotImportant, registerNotImportantFlag, o.registerNotImportant, registerNotImportantUsage)
 
-	flag.UintVar(&o.skipCountWords, skipCountWordsFlag, o.skipCountWords, skipCountWordsUsage)
-	flag.UintVar(&o.skipCountChars, skipCountCharsFlag, o.skipCountChars, skipCountCharsUsage)
+	flag.IntVar(&o.skipCountWords, skipCountWordsFlag, o.skipCountWords, skipCountWordsUsage)
+	flag.IntVar(&o.skipCountSymbols, skipCountCharsFlag, o.skipCountSymbols, skipCountCharsUsage)
 
 	flag.Parse()
 
