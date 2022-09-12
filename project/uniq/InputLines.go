@@ -12,8 +12,8 @@ const (
 	noResultCode = -3 //  Code : No result
 )
 
-func skipInput(line string, skipWords int, skipSymbols int) (string, int) {
-	for i := 0; i < skipWords; i++ {
+func skipWords(line string, countSkip int) (string, int) {
+	for i := 0; i < countSkip; i++ {
 		indexSpace := strings.Index(line, " ")
 		if indexSpace == -1 {
 			return "", noResultCode
@@ -21,15 +21,19 @@ func skipInput(line string, skipWords int, skipSymbols int) (string, int) {
 
 		curLength := len(line)
 
-		if indexSpace+1 <= curLength-indexSpace+1 {
-			line = line[indexSpace+1 : curLength-indexSpace+1]
+		if indexSpace+1 < curLength-indexSpace {
+			line = line[indexSpace+1:]
 		} else {
 			return "", noResultCode
 		}
 	}
 
-	if skipSymbols < len(line) {
-		line = line[skipSymbols : len(line)-skipWords]
+	return line, Success
+}
+
+func skipSymbols(line string, countSkip int) (string, int) {
+	if countSkip <= len(line) {
+		line = line[countSkip:]
 	} else {
 		return "", noResultCode
 	}
@@ -37,16 +41,19 @@ func skipInput(line string, skipWords int, skipSymbols int) (string, int) {
 	return line, Success
 }
 
-func scanLines(flow *os.File, skipWords int, skipSymbols int) (res *[]string) {
+func scanLines(flow *os.File, skipWordsCount int, skipSymbolsCount int) (res *[]string) {
 	scanner := bufio.NewScanner(flow)
 
 	var buf []string
 
 	for scanner.Scan() {
-		line, res := skipInput(scanner.Text(), skipWords, skipSymbols)
-		if res == Success {
+		line, resSkipWords := skipWords(scanner.Text(), skipWordsCount)
+		line, resSkipSumbols := skipWords(line, skipWordsCount)
+
+		if resSkipWords == Success && resSkipSumbols == Success {
 			buf = append(buf, line)
 		}
+
 	}
 
 	if err := scanner.Err(); err != nil {
