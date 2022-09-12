@@ -2,21 +2,34 @@ package uniq
 
 import "os"
 
-func showLines(path string, outputRule outputRuleType, lines []string, registerNotImportant bool) {
+func showLines(lines []string, opt options) {
 	var stream *os.File = os.Stdout
 
-	if path != "" {
-		stream, errCreate := os.Create(path)
+	if opt.outputFile != "" {
+		stream, errCreate := os.Create(opt.outputFile)
 		if errCreate != nil {
 			panic(errCreate)
 		}
 
 		defer stream.Close()
 
-		outputRule(stream, lines, registerNotImportant)
+		classifierHandlers(stream, lines, opt)
 
 		return
 	}
 
-	outputRule(stream, lines, registerNotImportant)
+	classifierHandlers(stream, lines, opt)
+}
+
+func classifierHandlers(stream *os.File, lines []string, opt options) {
+	switch {
+	case opt.showCountStr:
+		showAll(stream, lines, opt.registerNotImportant)
+	case opt.showUniqStr:
+		showUniq(stream, lines, opt.registerNotImportant)
+	case opt.showUnUniqStr:
+		showUnUniq(stream, lines, opt.registerNotImportant)
+	default:
+		showDefault(stream, lines, opt.registerNotImportant)
+	}
 }

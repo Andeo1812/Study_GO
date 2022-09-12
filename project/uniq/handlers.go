@@ -6,9 +6,7 @@ import (
 	"strings"
 )
 
-type outputRuleType func(*os.File, []string, bool)
-
-var showDefault outputRuleType = func(flow *os.File, lines []string, registerNotImportant bool) {
+func showDefault(flow *os.File, lines []string, registerNotImportant bool) {
 	if len(lines) > 0 {
 		flow.WriteString(lines[0] + "\n")
 	}
@@ -38,7 +36,7 @@ type Node struct {
 	value int
 }
 
-var showAll outputRuleType = func(flow *os.File, lines []string, registerNotImportant bool) {
+func showAll(flow *os.File, lines []string, registerNotImportant bool) {
 	sequence := []Node{}
 
 	var countNodes int
@@ -75,7 +73,7 @@ var showAll outputRuleType = func(flow *os.File, lines []string, registerNotImpo
 	}
 }
 
-var showUniq outputRuleType = func(flow *os.File, lines []string, registerNotImportant bool) {
+func showUniq(flow *os.File, lines []string, registerNotImportant bool) {
 	sequence := []Node{}
 
 	var countNodes int
@@ -114,7 +112,7 @@ var showUniq outputRuleType = func(flow *os.File, lines []string, registerNotImp
 	}
 }
 
-var showUnUniq outputRuleType = func(flow *os.File, lines []string, registerNotImportant bool) {
+func showUnUniq(flow *os.File, lines []string, registerNotImportant bool) {
 	sequence := []Node{}
 
 	var countNodes int

@@ -69,15 +69,18 @@ func TestGlobalDefaultSetup(t *testing.T) {
 		"I love music of Kartik.",
 		"Thanks.",
 		"I love music of Kartik."}
-	showLines(opt.outputFile, showDefault, output, opt.registerNotImportant)
+	showLines(output, opt)
 	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
 func TestGlobalAllSetup(t *testing.T) {
 	var opt options
+
 	opt.inputFile = "tests/Text.txt"
 	opt.outputFile = "tmp.txt"
+	opt.showCountStr = true
+
 	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
 
 	expected := []string{"3 I love music.",
@@ -85,7 +88,7 @@ func TestGlobalAllSetup(t *testing.T) {
 		"2 I love music of Kartik.",
 		"1 Thanks.",
 		"2 I love music of Kartik."}
-	showLines(opt.outputFile, showAll, output, opt.registerNotImportant)
+	showLines(output, opt)
 	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
 	assert.Equal(t, expected, output, "they should be equal")
 }
