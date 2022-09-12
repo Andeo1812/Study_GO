@@ -7,16 +7,22 @@ import (
 
 type outputRuleType func(*os.File, *map[string]int)
 
+var showDefault outputRuleType = func(flow *os.File, table *map[string]int) {
+	for key, _ := range *table {
+		flow.WriteString(key + "\n")
+	}
+}
+
 var showAll outputRuleType = func(flow *os.File, table *map[string]int) {
 	for key, val := range *table {
-		flow.WriteString(key + " " + strconv.Itoa(val) + "\n")
+		flow.WriteString(strconv.Itoa(val) + " " + key + "\n")
 	}
 }
 
 var showUniq outputRuleType = func(flow *os.File, table *map[string]int) {
 	for key, val := range *table {
 		if val == 1 {
-			flow.WriteString(key + " " + strconv.Itoa(val) + "\n")
+			flow.WriteString(key + "\n")
 		}
 	}
 }
@@ -24,7 +30,7 @@ var showUniq outputRuleType = func(flow *os.File, table *map[string]int) {
 var showUnUniq outputRuleType = func(flow *os.File, table *map[string]int) {
 	for key, val := range *table {
 		if val != 1 {
-			flow.WriteString(key + " " + strconv.Itoa(val) + "\n")
+			flow.WriteString(key + "\n")
 		}
 	}
 }

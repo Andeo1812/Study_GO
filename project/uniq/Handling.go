@@ -38,4 +38,6 @@ func Handling() {
 
 		return
 	}
+
+	showLines(options.outputFile, showDefault, &linesTable)
 }
