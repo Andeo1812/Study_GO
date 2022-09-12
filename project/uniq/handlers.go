@@ -13,18 +13,22 @@ var showDefault outputRuleType = func(flow *os.File, lines []string, registerNot
 		flow.WriteString(lines[0] + "\n")
 	}
 
+	compareRule := func(left string, right string) bool {
+		return left == right
+	}
+
+	if !registerNotImportant {
+		compareRule = func(left string, right string) bool {
+			return strings.EqualFold(left, right)
+		}
+	}
+
 	for i := 1; i < len(lines)-1; i++ {
 		prev := lines[i-1]
 		cur := lines[i]
 
-		if !registerNotImportant {
-			if cur != prev {
-				flow.WriteString(cur + "\n")
-			}
-		} else {
-			if !strings.EqualFold(cur, prev) {
-				flow.WriteString(cur + "\n")
-			}
+		if !compareRule(cur, prev) {
+			flow.WriteString(cur + "\n")
 		}
 	}
 }
@@ -44,24 +48,25 @@ var showAll outputRuleType = func(flow *os.File, lines []string, registerNotImpo
 		countNodes++
 	}
 
+	compareRule := func(left string, right string) bool {
+		return left == right
+	}
+
+	if !registerNotImportant {
+		compareRule = func(left string, right string) bool {
+			return strings.EqualFold(left, right)
+		}
+	}
+
 	for i := 1; i < len(lines); i++ {
 		prev := lines[i-1]
 		cur := lines[i]
 
-		if !registerNotImportant {
-			if cur != prev {
-				sequence = append(sequence, Node{cur, 1})
-				countNodes++
-			} else {
-				sequence[countNodes-1].value++
-			}
+		if !compareRule(cur, prev) {
+			sequence = append(sequence, Node{cur, 1})
+			countNodes++
 		} else {
-			if !strings.EqualFold(cur, prev) {
-				sequence = append(sequence, Node{cur, 1})
-				countNodes++
-			} else {
-				sequence[countNodes-1].value++
-			}
+			sequence[countNodes-1].value++
 		}
 	}
 
@@ -80,24 +85,25 @@ var showUniq outputRuleType = func(flow *os.File, lines []string, registerNotImp
 		countNodes++
 	}
 
+	compareRule := func(left string, right string) bool {
+		return left == right
+	}
+
+	if !registerNotImportant {
+		compareRule = func(left string, right string) bool {
+			return strings.EqualFold(left, right)
+		}
+	}
+
 	for i := 1; i < len(lines); i++ {
 		prev := lines[i-1]
 		cur := lines[i]
 
-		if !registerNotImportant {
-			if cur != prev {
-				sequence = append(sequence, Node{cur, 1})
-				countNodes++
-			} else {
-				sequence[countNodes-1].value++
-			}
+		if !compareRule(cur, prev) {
+			sequence = append(sequence, Node{cur, 1})
+			countNodes++
 		} else {
-			if !strings.EqualFold(cur, prev) {
-				sequence = append(sequence, Node{cur, 1})
-				countNodes++
-			} else {
-				sequence[countNodes-1].value++
-			}
+			sequence[countNodes-1].value++
 		}
 	}
 
@@ -109,35 +115,34 @@ var showUniq outputRuleType = func(flow *os.File, lines []string, registerNotImp
 }
 
 var showUnUniq outputRuleType = func(flow *os.File, lines []string, registerNotImportant bool) {
-	countLines := len(lines)
-
 	sequence := []Node{}
 
 	var countNodes int
 
-	if countLines > 0 {
+	if len(lines) > 0 {
 		sequence = append(sequence, Node{lines[0], 1})
 		countNodes++
 	}
 
-	for i := 1; i < countLines; i++ {
+	compareRule := func(left string, right string) bool {
+		return left == right
+	}
+
+	if !registerNotImportant {
+		compareRule = func(left string, right string) bool {
+			return strings.EqualFold(left, right)
+		}
+	}
+
+	for i := 1; i < len(lines); i++ {
 		prev := lines[i-1]
 		cur := lines[i]
 
-		if !registerNotImportant {
-			if cur != prev {
-				sequence = append(sequence, Node{cur, 1})
-				countNodes++
-			} else {
-				sequence[countNodes-1].value++
-			}
+		if !compareRule(cur, prev) {
+			sequence = append(sequence, Node{cur, 1})
+			countNodes++
 		} else {
-			if !strings.EqualFold(cur, prev) {
-				sequence = append(sequence, Node{cur, 1})
-				countNodes++
-			} else {
-				sequence[countNodes-1].value++
-			}
+			sequence[countNodes-1].value++
 		}
 	}
 
