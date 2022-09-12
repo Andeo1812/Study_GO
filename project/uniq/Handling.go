@@ -1,19 +1,17 @@
 package uniq
 
-import "fmt"
+func analysisData(lines *[]string) map[string]int {
+	resultTable := map[string]int{}
 
-type setup struct {
-	options options
-	data    []string
-}
+	for _, val := range *lines {
+		if _, keyExist := resultTable[val]; !keyExist {
+			resultTable[val] = 1
+		} else {
+			resultTable[val] += 1
+		}
+	}
 
-func createSetup(opt *options, data *[]string) setup {
-	var s setup
-
-	s.options = *opt
-	s.data = *data
-
-	return s
+	return resultTable
 }
 
 func Handling() {
@@ -21,8 +19,9 @@ func Handling() {
 
 	lines := getLines(options.inputFile)
 
-	var setup setup = createSetup(&options, lines)
+	//  fmt.Println(lines)
 
-	fmt.Println(setup.data)
+	linesTable := analysisData(lines)
 
+	showLines(options.outputFile, simple, &linesTable)
 }
