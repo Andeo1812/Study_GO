@@ -92,3 +92,55 @@ func TestGlobalAllSetup(t *testing.T) {
 	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
 	assert.Equal(t, expected, output, "they should be equal")
 }
+
+func TestGlobalUniqSetup(t *testing.T) {
+	var opt options
+
+	opt.inputFile = "tests/Text.txt"
+	opt.outputFile = "tmp.txt"
+	opt.showUniqStr = true
+
+	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
+
+	expected := []string{"",
+		"Thanks."}
+	showLines(output, opt)
+	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	assert.Equal(t, expected, output, "they should be equal")
+}
+
+func TestGlobalUnUniqSetup(t *testing.T) {
+	var opt options
+
+	opt.inputFile = "tests/Text.txt"
+	opt.outputFile = "tmp.txt"
+	opt.showUnUniqStr = true
+
+	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
+
+	expected := []string{"I love music.",
+		"I love music of Kartik.",
+		"I love music of Kartik."}
+	showLines(output, opt)
+	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	assert.Equal(t, expected, output, "they should be equal")
+}
+
+func TestGlobalDefaultWithoutRegSetup(t *testing.T) {
+	var opt options
+
+	opt.inputFile = "tests/TextRegistr.txt"
+	opt.outputFile = "tmp.txt"
+	opt.registerNotImportant = true
+
+	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
+
+	expected := []string{"I LOVE MUSIC.",
+		"",
+		"I love MuSIC of Kartik.",
+		"Thanks.",
+		"I love music of kartik."}
+	showLines(output, opt)
+	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	assert.Equal(t, expected, output, "they should be equal")
+}

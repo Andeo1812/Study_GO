@@ -24,12 +24,12 @@ func showLines(lines []string, opt options) {
 func classifierHandlers(stream *os.File, lines []string, opt options) {
 	switch {
 	case opt.showCountStr:
-		showAll(stream, lines, opt.registerNotImportant)
+		showAll(stream, lines, opt)
 	case opt.showUniqStr:
-		showUniq(stream, lines, opt.registerNotImportant)
+		showUniq(stream, lines, opt)
 	case opt.showUnUniqStr:
-		showUnUniq(stream, lines, opt.registerNotImportant)
+		showUnUniq(stream, lines, opt)
 	default:
-		showDefault(stream, lines, opt.registerNotImportant)
+		showDefault(stream, lines, opt)
 	}
 }

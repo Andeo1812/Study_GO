@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func showDefault(flow *os.File, lines []string, registerNotImportant bool) {
+func showDefault(flow *os.File, lines []string, opt options) {
 	if len(lines) > 0 {
 		flow.WriteString(lines[0] + "\n")
 	}
@@ -15,7 +15,7 @@ func showDefault(flow *os.File, lines []string, registerNotImportant bool) {
 		return left == right
 	}
 
-	if !registerNotImportant {
+	if opt.registerNotImportant {
 		compareRule = func(left string, right string) bool {
 			return strings.EqualFold(left, right)
 		}
@@ -36,7 +36,7 @@ type Node struct {
 	value int
 }
 
-func showAll(flow *os.File, lines []string, registerNotImportant bool) {
+func showAll(flow *os.File, lines []string, opt options) {
 	sequence := []Node{}
 
 	var countNodes int
@@ -50,7 +50,7 @@ func showAll(flow *os.File, lines []string, registerNotImportant bool) {
 		return left == right
 	}
 
-	if !registerNotImportant {
+	if opt.registerNotImportant {
 		compareRule = func(left string, right string) bool {
 			return strings.EqualFold(left, right)
 		}
@@ -73,7 +73,7 @@ func showAll(flow *os.File, lines []string, registerNotImportant bool) {
 	}
 }
 
-func showUniq(flow *os.File, lines []string, registerNotImportant bool) {
+func showUniq(flow *os.File, lines []string, opt options) {
 	sequence := []Node{}
 
 	var countNodes int
@@ -87,7 +87,7 @@ func showUniq(flow *os.File, lines []string, registerNotImportant bool) {
 		return left == right
 	}
 
-	if !registerNotImportant {
+	if opt.registerNotImportant {
 		compareRule = func(left string, right string) bool {
 			return strings.EqualFold(left, right)
 		}
@@ -112,7 +112,7 @@ func showUniq(flow *os.File, lines []string, registerNotImportant bool) {
 	}
 }
 
-func showUnUniq(flow *os.File, lines []string, registerNotImportant bool) {
+func showUnUniq(flow *os.File, lines []string, opt options) {
 	sequence := []Node{}
 
 	var countNodes int
@@ -126,7 +126,7 @@ func showUnUniq(flow *os.File, lines []string, registerNotImportant bool) {
 		return left == right
 	}
 
-	if !registerNotImportant {
+	if opt.registerNotImportant {
 		compareRule = func(left string, right string) bool {
 			return strings.EqualFold(left, right)
 		}

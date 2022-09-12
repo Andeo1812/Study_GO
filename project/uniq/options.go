@@ -42,17 +42,17 @@ func getOptions() options {
 func (o *options) checkOptions() {
 	var countKeys int
 
-	if o.showCountStr {
-		countKeys++
+	checkField := func(flag bool, count int) int {
+		if flag {
+			return count + 1
+		}
+
+		return count
 	}
 
-	if o.showUnUniqStr {
-		countKeys++
-	}
-
-	if o.showUniqStr {
-		countKeys++
-	}
+	countKeys = checkField(o.showCountStr, countKeys)
+	countKeys = checkField(o.showUnUniqStr, countKeys)
+	countKeys = checkField(o.showUniqStr, countKeys)
 
 	if countKeys > 1 {
 		format := "Only one of the keys: -%s, -%s, -%s is possible\n"
