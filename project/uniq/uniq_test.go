@@ -5,27 +5,87 @@ import (
 	"testing"
 )
 
-func TestSkipInput(t *testing.T) {
+func TestSkipSymbols(t *testing.T) {
+	var input string = "1 22 333 4444!"
+
+	// skip 10 symbols
+	output := "444!"
+	resSkip, res := skipSymbols(input, 10)
+	assert.Equal(t, nil, res, "they should be equal")
+	assert.Equal(t, output, resSkip, "they should be equal")
+}
+
+func TestSkipWords(t *testing.T) {
 	var input string = "1 22 333 4444!"
 
 	// skip 1 word
 	var output string = "22 333 4444!"
 	resSkip, res := skipWords(input, 1)
 
-	assert.Equal(t, Success, res, "they should be equal")
+	assert.Equal(t, nil, res, "they should be equal")
+	assert.Equal(t, output, resSkip, "they should be equal")
+}
+
+func TestSkipCombination(t *testing.T) {
+	var input string = "1 22 333 4444!"
+
+	// combination skip 1 word skip 3 symbols
+	output := "333 4444!"
+	resSkip, res1 := skipWords(input, 1)
+	resSkip, res2 := skipSymbols(resSkip, 3)
+	assert.Equal(t, nil, res1, "they should be equal")
+	assert.Equal(t, nil, res2, "they should be equal")
 	assert.Equal(t, output, resSkip, "they should be equal")
 
-	// skip 10 symbols
-	output = "444!"
-	resSkip, res = skipSymbols(input, 10)
-	assert.Equal(t, Success, res, "they should be equal")
+	// combination skip 2 word skip 1 symbols
+	output = "33 4444!"
+	resSkip, res1 = skipWords(input, 2)
+	resSkip, res2 = skipSymbols(resSkip, 1)
+	assert.Equal(t, nil, res1, "they should be equal")
+	assert.Equal(t, nil, res2, "they should be equal")
 	assert.Equal(t, output, resSkip, "they should be equal")
+}
 
-	// combinate
-	output = "333 4444!"
-	resSkip, res_1 := skipWords(input, 1)
-	resSkip, res_2 := skipSymbols(resSkip, 3)
-	assert.Equal(t, Success, res_1, "they should be equal")
-	assert.Equal(t, Success, res_2, "they should be equal")
-	assert.Equal(t, output, resSkip, "they should be equal")
+func TestGlobalDefaultSetup(t *testing.T) {
+	var opt options
+
+	opt.inputFile = "tests/Text.txt"
+	opt.outputFile = "tmp.txt"
+
+	expected := []string{"I love music.",
+		"I love music.",
+		"I love music.",
+		"",
+		"I love music of Kartik.",
+		"I love music of Kartik.",
+		"Thanks.",
+		"I love music of Kartik.",
+		"I love music of Kartik."}
+	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
+	assert.Equal(t, expected, output, "they should be equal")
+
+	expected = []string{"I love music.",
+		"",
+		"I love music of Kartik.",
+		"Thanks.",
+		"I love music of Kartik."}
+	showLines(opt.outputFile, showDefault, output, opt.registerNotImportant)
+	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	assert.Equal(t, expected, output, "they should be equal")
+}
+
+func TestGlobalAllSetup(t *testing.T) {
+	var opt options
+	opt.inputFile = "tests/Text.txt"
+	opt.outputFile = "tmp.txt"
+	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
+
+	expected := []string{"3 I love music.",
+		"1 ",
+		"2 I love music of Kartik.",
+		"1 Thanks.",
+		"2 I love music of Kartik."}
+	showLines(opt.outputFile, showAll, output, opt.registerNotImportant)
+	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	assert.Equal(t, expected, output, "they should be equal")
 }
