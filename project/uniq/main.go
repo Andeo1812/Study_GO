@@ -19,25 +19,23 @@ func Handling() {
 
 	lines := getLines(options.inputFile, options.skipCountWords, options.skipCountSymbols)
 
-	linesTable := analysisData(lines)
-
 	if options.showCountStr {
-		showLines(options.outputFile, showAll, &linesTable)
+		showLines(options.outputFile, showAll, lines)
 
 		return
 	}
 
 	if options.showUniqStr {
-		showLines(options.outputFile, showUniq, &linesTable)
+		showLines(options.outputFile, showUniq, lines)
 
 		return
 	}
 
 	if options.showUnUniqStr {
-		showLines(options.outputFile, showUnUniq, &linesTable)
+		showLines(options.outputFile, showUnUniq, lines)
 
 		return
 	}
 
-	showLines(options.outputFile, showDefault, &linesTable)
+	showLines(options.outputFile, showDefault, lines)
 }

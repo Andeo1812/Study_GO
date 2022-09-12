@@ -131,7 +131,7 @@ I love music of Kartik.
 Thanks.
 I love music of Kartik.
 I love music of Kartik.
-$cat input.txt | go run uniq.go -c
+$cat input.txt | go run uniq.go -c.txt
 3 I love music.
 1 
 2 I love music of Kartik.

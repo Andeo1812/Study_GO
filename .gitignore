@@ -6,7 +6,7 @@
 *.dylib
 .idea
 
-# Test binary, built with `go test -c`
+# Text.txt binary, built with `go test -c.txt`
 *.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE

@@ -7,11 +7,16 @@ import (
 	"strings"
 )
 
-func skipInput(line string, skipWords int, skipSymbols int) string {
+const (
+	Success      = 1
+	noResultCode = -3 //  Code : No result
+)
+
+func skipInput(line string, skipWords int, skipSymbols int) (string, int) {
 	for i := 0; i < skipWords; i++ {
 		indexSpace := strings.Index(line, " ")
 		if indexSpace == -1 {
-			return ""
+			return "", noResultCode
 		}
 
 		curLength := len(line)
@@ -19,17 +24,17 @@ func skipInput(line string, skipWords int, skipSymbols int) string {
 		if indexSpace+1 <= curLength-indexSpace+1 {
 			line = line[indexSpace+1 : curLength-indexSpace+1]
 		} else {
-			return ""
+			return "", noResultCode
 		}
 	}
 
 	if skipSymbols < len(line) {
 		line = line[skipSymbols : len(line)-skipWords]
 	} else {
-		return ""
+		return "", noResultCode
 	}
 
-	return line
+	return line, Success
 }
 
 func scanLines(flow *os.File, skipWords int, skipSymbols int) (res *[]string) {
@@ -38,8 +43,8 @@ func scanLines(flow *os.File, skipWords int, skipSymbols int) (res *[]string) {
 	var buf []string
 
 	for scanner.Scan() {
-		var line string = skipInput(scanner.Text(), skipWords, skipSymbols)
-		if line != "" {
+		line, res := skipInput(scanner.Text(), skipWords, skipSymbols)
+		if res == Success {
 			buf = append(buf, line)
 		}
 	}
