@@ -2,7 +2,7 @@ package uniq
 
 import "os"
 
-func showLines(path string, outputRule outputRuleType, lines *[]string) {
+func showLines(path string, outputRule outputRuleType, lines *[]string, registerNotImportant bool) {
 	var stream *os.File = os.Stdout
 
 	if path != "" {
@@ -13,10 +13,10 @@ func showLines(path string, outputRule outputRuleType, lines *[]string) {
 
 		defer stream.Close()
 
-		outputRule(stream, lines)
+		outputRule(stream, lines, registerNotImportant)
 
 		return
 	}
 
-	outputRule(stream, lines)
+	outputRule(stream, lines, registerNotImportant)
 }

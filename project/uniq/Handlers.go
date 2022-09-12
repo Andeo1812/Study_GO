@@ -3,11 +3,12 @@ package uniq
 import (
 	"os"
 	"strconv"
+	"strings"
 )
 
-type outputRuleType func(*os.File, *[]string)
+type outputRuleType func(*os.File, *[]string, bool)
 
-var showDefault outputRuleType = func(flow *os.File, lines *[]string) {
+var showDefault outputRuleType = func(flow *os.File, lines *[]string, registerNotImportant bool) {
 	countLines := len(*lines)
 
 	if countLines > 0 {
@@ -18,13 +19,19 @@ var showDefault outputRuleType = func(flow *os.File, lines *[]string) {
 		prev := (*lines)[i-1]
 		cur := (*lines)[i]
 
-		if cur != prev {
-			flow.WriteString(cur + "\n")
+		if !registerNotImportant {
+			if cur != prev {
+				flow.WriteString(cur + "\n")
+			}
+		} else {
+			if !strings.EqualFold(cur, prev) {
+				flow.WriteString(cur + "\n")
+			}
 		}
 	}
 }
 
-var showAll outputRuleType = func(flow *os.File, lines *[]string) {
+var showAll outputRuleType = func(flow *os.File, lines *[]string, registerNotImportant bool) {
 	countLines := len(*lines)
 
 	sequence := []string{}
@@ -47,8 +54,14 @@ var showAll outputRuleType = func(flow *os.File, lines *[]string) {
 			repetitionTable[cur] += 1
 		}
 
-		if cur != prev {
-			sequence = append(sequence, cur)
+		if !registerNotImportant {
+			if cur != prev {
+				sequence = append(sequence, cur)
+			}
+		} else {
+			if !strings.EqualFold(cur, prev) {
+				sequence = append(sequence, cur)
+			}
 		}
 	}
 
@@ -57,7 +70,7 @@ var showAll outputRuleType = func(flow *os.File, lines *[]string) {
 	}
 }
 
-var showUniq outputRuleType = func(flow *os.File, lines *[]string) {
+var showUniq outputRuleType = func(flow *os.File, lines *[]string, registerNotImportant bool) {
 	countLines := len(*lines)
 
 	sequence := []string{}
@@ -80,8 +93,14 @@ var showUniq outputRuleType = func(flow *os.File, lines *[]string) {
 			repetitionTable[cur] += 1
 		}
 
-		if cur != prev {
-			sequence = append(sequence, cur)
+		if !registerNotImportant {
+			if cur != prev {
+				sequence = append(sequence, cur)
+			}
+		} else {
+			if !strings.EqualFold(cur, prev) {
+				sequence = append(sequence, cur)
+			}
 		}
 	}
 
@@ -92,7 +111,7 @@ var showUniq outputRuleType = func(flow *os.File, lines *[]string) {
 	}
 }
 
-var showUnUniq outputRuleType = func(flow *os.File, lines *[]string) {
+var showUnUniq outputRuleType = func(flow *os.File, lines *[]string, registerNotImportant bool) {
 	countLines := len(*lines)
 
 	sequence := []string{}
@@ -115,8 +134,14 @@ var showUnUniq outputRuleType = func(flow *os.File, lines *[]string) {
 			repetitionTable[cur] += 1
 		}
 
-		if cur != prev {
-			sequence = append(sequence, cur)
+		if !registerNotImportant {
+			if cur != prev {
+				sequence = append(sequence, cur)
+			}
+		} else {
+			if !strings.EqualFold(cur, prev) {
+				sequence = append(sequence, cur)
+			}
 		}
 	}
 
