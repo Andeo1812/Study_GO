@@ -17,13 +17,11 @@ func skipWords(line string, countSkip int) (string, error) {
 			return "", errors.New("no result")
 		}
 
-		curLength := len(line)
-
-		if indexSpace+1 < curLength-indexSpace {
-			line = line[indexSpace+1:]
-		} else {
+		if indexSpace+1 >= len(line)-indexSpace {
 			return "", errors.New("no result")
 		}
+
+		line = line[indexSpace+1:]
 	}
 
 	return line, nil
@@ -38,16 +36,16 @@ func skipSymbols(line string, countSkip int) (string, error) {
 }
 
 func getTypeComparator(RegisterNotImportant bool) func(string, string) int {
-	compareRule := strings.Compare
-
-	if RegisterNotImportant {
-		compareRule = func(left string, right string) int {
-			if strings.EqualFold(left, right) {
-				return 0
-			}
-
-			return -1
+	compareRule := func(left string, right string) int {
+		if strings.EqualFold(left, right) {
+			return 0
 		}
+
+		return -1
+	}
+
+	if !RegisterNotImportant {
+		return strings.Compare
 	}
 
 	return compareRule

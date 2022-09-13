@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"errors"
-	"strings"
 	"uniq/project/uniq/options"
 )
 
@@ -16,16 +15,6 @@ func defaultHandlerLines(lines []string, opt options.Options) ([]string, error) 
 	}
 
 	compareRule := getTypeComparator(opt.RegisterNotImportant)
-
-	if opt.RegisterNotImportant {
-		compareRule = func(left string, right string) int {
-			if strings.EqualFold(left, right) {
-				return 0
-			}
-
-			return -1
-		}
-	}
 
 	for i := 1; i < len(lines)-1; i++ {
 		prev := lines[i-1]

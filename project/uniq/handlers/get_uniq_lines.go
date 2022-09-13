@@ -8,16 +8,12 @@ import (
 func getUniqLines(lines []string, opt options.Options) ([]string, error) {
 	res := make([]string, 0)
 
-	sequence := make([]node, 0)
-
-	var countNodes int
-
-	if len(lines) > 0 {
-		sequence = append(sequence, node{lines[0], 1})
-		countNodes++
-	} else {
+	if len(lines) == 0 {
 		return res, errors.New("no data")
 	}
+
+	sequence := []node{node{lines[0], 1}}
+	var countNodes int = 1
 
 	compareRule := getTypeComparator(opt.RegisterNotImportant)
 
