@@ -10,8 +10,6 @@ func defaultHandlerLines(lines []string, opt options.Options) ([]string, error) 
 
 	if len(lines) == 0 {
 		return res, errors.New("no data")
-
-		res = append(res, lines[0])
 	}
 
 	res = append(res, lines[0])
