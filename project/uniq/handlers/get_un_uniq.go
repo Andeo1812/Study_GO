@@ -5,7 +5,7 @@ import (
 	"uniq/project/uniq/options"
 )
 
-func getUnUniq(lines []string, opt options.Options) (res []string) {
+func getUnUniqLines(lines []string, opt options.Options) (res []string) {
 	sequence := make([]node, 0)
 
 	var countNodes int

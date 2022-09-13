@@ -5,7 +5,7 @@ import (
 	"uniq/project/uniq/options"
 )
 
-func defaultHandler(lines []string, opt options.Options) (res []string) {
+func defaultHandlerLines(lines []string, opt options.Options) (res []string) {
 	if len(lines) > 0 {
 		res = append(res, lines[0])
 	}

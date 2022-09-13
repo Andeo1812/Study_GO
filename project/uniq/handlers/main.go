@@ -12,12 +12,12 @@ type node struct {
 func ClassifierHandlers(lines []string, opt options.Options) (res []string) {
 	switch {
 	case opt.ShowCountStr:
-		return getCount(lines, opt)
+		return getCountLines(lines, opt)
 	case opt.ShowUniqStr:
-		return getUniq(lines, opt)
+		return getUniqLines(lines, opt)
 	case opt.ShowUnUniqStr:
-		return getUnUniq(lines, opt)
+		return getUnUniqLines(lines, opt)
 	default:
-		return defaultHandler(lines, opt)
+		return defaultHandlerLines(lines, opt)
 	}
 }
