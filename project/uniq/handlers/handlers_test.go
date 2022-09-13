@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"testing"
 	"uniq/project/uniq/options"
 )
@@ -9,7 +9,7 @@ import (
 func TestDefaultSetup(t *testing.T) {
 	var opt options.Options
 
-	var input1 = []string{"I love music.",
+	var initData = []string{"I love music.",
 		"I love music.",
 		"I love music.",
 		"",
@@ -24,8 +24,9 @@ func TestDefaultSetup(t *testing.T) {
 		"I love music of Kartik.",
 		"Thanks.",
 		"I love music of Kartik."}
-	output := ClassifierHandlers(input1, opt)
-	assert.Equal(t, expected, output, "they should be equal")
+	output, errHandler := ClassifierHandlers(initData, opt)
+	require.Nil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
 }
 
 func TestAllSetup(t *testing.T) {
@@ -47,8 +48,9 @@ func TestAllSetup(t *testing.T) {
 		"2 I love music of Kartik.",
 		"1 Thanks.",
 		"2 I love music of Kartik."}
-	output := ClassifierHandlers(initData, opt)
-	assert.Equal(t, expected, output, "they should be equal")
+	output, errHandler := ClassifierHandlers(initData, opt)
+	require.Nil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
 }
 
 func TestUniqSetup(t *testing.T) {
@@ -67,8 +69,9 @@ func TestUniqSetup(t *testing.T) {
 
 	expected := []string{"",
 		"Thanks."}
-	output := ClassifierHandlers(initData, opt)
-	assert.Equal(t, expected, output, "they should be equal")
+	output, errHandler := ClassifierHandlers(initData, opt)
+	require.Nil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
 }
 
 func TestUnUniqSetup(t *testing.T) {
@@ -88,8 +91,9 @@ func TestUnUniqSetup(t *testing.T) {
 	expected := []string{"I love music.",
 		"I love music of Kartik.",
 		"I love music of Kartik."}
-	output := ClassifierHandlers(initData, opt)
-	assert.Equal(t, expected, output, "they should be equal")
+	output, errHandler := ClassifierHandlers(initData, opt)
+	require.Nil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
 }
 
 func TestDefaultWithoutRegSetup(t *testing.T) {
@@ -111,8 +115,9 @@ func TestDefaultWithoutRegSetup(t *testing.T) {
 		"I love MuSIC of Kartik.",
 		"Thanks.",
 		"I love music of kartik."}
-	output := ClassifierHandlers(initData, opt)
-	assert.Equal(t, expected, output, "they should be equal")
+	output, errHandler := ClassifierHandlers(initData, opt)
+	require.Nil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
 }
 
 func TestCombinationSetup(t *testing.T) {
@@ -135,16 +140,18 @@ func TestCombinationSetup(t *testing.T) {
 		"2 I love MuSIC of Kartik.",
 		"1 Thanks.",
 		"2 I love music of kartik."}
-	output := ClassifierHandlers(initData, opt)
-	assert.Equal(t, expected, output, "they should be equal")
+	output, errHandler := ClassifierHandlers(initData, opt)
+	require.Nil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
 
 	opt.ShowCountStr = false
 	opt.ShowUniqStr = true
 
 	expected = []string{"",
 		"Thanks."}
-	output = ClassifierHandlers(initData, opt)
-	assert.Equal(t, expected, output, "they should be equal")
+	output, errHandler = ClassifierHandlers(initData, opt)
+	require.Nil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
 
 	opt.ShowUniqStr = false
 	opt.ShowDuplicateStr = true
@@ -152,6 +159,38 @@ func TestCombinationSetup(t *testing.T) {
 	expected = []string{"I LOVE MUSIC.",
 		"I love MuSIC of Kartik.",
 		"I love music of kartik."}
-	output = ClassifierHandlers(initData, opt)
-	assert.Equal(t, expected, output, "they should be equal")
+	output, errHandler = ClassifierHandlers(initData, opt)
+	require.Nil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
+}
+
+func TestBadSetup(t *testing.T) {
+	var opt options.Options
+
+	var initData = make([]string, 0)
+	expected := make([]string, 0)
+
+	output, errHandler := ClassifierHandlers(initData, opt)
+	require.NotNil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
+
+	opt.ShowCountStr = true
+
+	output, errHandler = ClassifierHandlers(initData, opt)
+	require.NotNil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
+
+	opt.ShowCountStr = false
+	opt.ShowUniqStr = true
+
+	output, errHandler = ClassifierHandlers(initData, opt)
+	require.NotNil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
+
+	opt.ShowUniqStr = false
+	opt.ShowDuplicateStr = true
+
+	output, errHandler = ClassifierHandlers(initData, opt)
+	require.NotNil(t, errHandler)
+	require.Equal(t, expected, output, "they should be equal")
 }

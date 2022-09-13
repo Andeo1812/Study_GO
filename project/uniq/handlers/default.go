@@ -1,13 +1,18 @@
 package handlers
 
 import (
+	"errors"
 	"strings"
 	"uniq/project/uniq/options"
 )
 
-func defaultHandlerLines(lines []string, opt options.Options) (res []string) {
+func defaultHandlerLines(lines []string, opt options.Options) ([]string, error) {
+	res := make([]string, 0)
+
 	if len(lines) > 0 {
 		res = append(res, lines[0])
+	} else {
+		return res, errors.New("no data")
 	}
 
 	compareRule := getTypeComparator(opt.RegisterNotImportant)
@@ -31,5 +36,5 @@ func defaultHandlerLines(lines []string, opt options.Options) (res []string) {
 		}
 	}
 
-	return
+	return res, nil
 }

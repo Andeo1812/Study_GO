@@ -4,7 +4,7 @@ import (
 	"uniq/project/uniq/options"
 )
 
-func ClassifierHandlers(lines []string, opt options.Options) []string {
+func ClassifierHandlers(lines []string, opt options.Options) ([]string, error) {
 	switch {
 	case opt.ShowCountStr:
 		return getCountLines(lines, opt)

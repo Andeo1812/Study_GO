@@ -10,5 +10,8 @@ func main() {
 
 	lines := iohandlers.GetLines(options.InputFile, options.SkipCountWords, options.SkipCountSymbols)
 
-	iohandlers.ShowLines(lines, options)
+	resShow := iohandlers.ShowLines(lines, options)
+	if resShow != nil {
+		panic("Bad data")
+	}
 }

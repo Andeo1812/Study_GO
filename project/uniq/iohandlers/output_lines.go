@@ -12,7 +12,7 @@ func writeFlow(stream *os.File, lines []string) {
 	}
 }
 
-func ShowLines(lines []string, opt options.Options) {
+func ShowLines(lines []string, opt options.Options) error {
 	var stream *os.File = os.Stdout
 
 	if opt.OutputFile != "" {
@@ -23,12 +23,14 @@ func ShowLines(lines []string, opt options.Options) {
 
 		defer stream.Close()
 
-		result := handlers.ClassifierHandlers(lines, opt)
+		result, errHandler := handlers.ClassifierHandlers(lines, opt)
 		writeFlow(stream, result)
 
-		return
+		return errHandler
 	}
 
-	result := handlers.ClassifierHandlers(lines, opt)
+	result, errHandler := handlers.ClassifierHandlers(lines, opt)
 	writeFlow(stream, result)
+
+	return errHandler
 }

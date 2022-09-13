@@ -1,10 +1,13 @@
 package handlers
 
 import (
+	"errors"
 	"uniq/project/uniq/options"
 )
 
-func getDuplicateLines(lines []string, opt options.Options) (res []string) {
+func getDuplicateLines(lines []string, opt options.Options) ([]string, error) {
+	res := make([]string, 0)
+
 	sequence := make([]node, 0)
 
 	var countNodes int
@@ -12,6 +15,8 @@ func getDuplicateLines(lines []string, opt options.Options) (res []string) {
 	if len(lines) > 0 {
 		sequence = append(sequence, node{lines[0], 1})
 		countNodes++
+	} else {
+		return res, errors.New("no data")
 	}
 
 	compareRule := getTypeComparator(opt.RegisterNotImportant)
@@ -34,5 +39,5 @@ func getDuplicateLines(lines []string, opt options.Options) (res []string) {
 		}
 	}
 
-	return
+	return res, nil
 }
