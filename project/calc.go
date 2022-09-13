@@ -3,5 +3,5 @@ package main
 import "Modules/project/calc"
 
 func main() {
-	calc.Handling()
+	calc.Work()
 }
