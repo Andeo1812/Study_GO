@@ -7,10 +7,8 @@ import (
 )
 
 func getCountLines(lines []string, opt options.Options) ([]string, error) {
-	res := make([]string, 0)
-
 	if len(lines) == 0 {
-		return res, errors.New("no data")
+		return nil, errors.New("no data")
 	}
 
 	sequence := []node{node{lines[0], 1}}
@@ -29,6 +27,8 @@ func getCountLines(lines []string, opt options.Options) ([]string, error) {
 			sequence[countNodes-1].value++
 		}
 	}
+
+	res := make([]string, 0)
 
 	for _, node := range sequence {
 		res = append(res, strconv.Itoa(node.value)+" "+node.key)

@@ -6,13 +6,11 @@ import (
 )
 
 func defaultHandlerLines(lines []string, opt options.Options) ([]string, error) {
-	res := make([]string, 0)
-
 	if len(lines) == 0 {
-		return res, errors.New("no data")
+		return nil, errors.New("no data")
 	}
 
-	res = append(res, lines[0])
+	res := []string{lines[0]}
 
 	compareRule := getTypeComparator(opt.RegisterNotImportant)
 

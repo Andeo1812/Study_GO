@@ -168,29 +168,24 @@ func TestBadSetup(t *testing.T) {
 	var opt options.Options
 
 	var initData = make([]string, 0)
-	expected := make([]string, 0)
 
-	output, errHandler := ClassifierHandlers(initData, opt)
+	_, errHandler := ClassifierHandlers(initData, opt)
 	require.NotNil(t, errHandler)
-	require.Equal(t, expected, output, "they should be equal")
 
 	opt.ShowCountStr = true
 
-	output, errHandler = ClassifierHandlers(initData, opt)
+	_, errHandler = ClassifierHandlers(initData, opt)
 	require.NotNil(t, errHandler)
-	require.Equal(t, expected, output, "they should be equal")
 
 	opt.ShowCountStr = false
 	opt.ShowUniqStr = true
 
-	output, errHandler = ClassifierHandlers(initData, opt)
+	_, errHandler = ClassifierHandlers(initData, opt)
 	require.NotNil(t, errHandler)
-	require.Equal(t, expected, output, "they should be equal")
 
 	opt.ShowUniqStr = false
 	opt.ShowDuplicateStr = true
 
-	output, errHandler = ClassifierHandlers(initData, opt)
+	_, errHandler = ClassifierHandlers(initData, opt)
 	require.NotNil(t, errHandler)
-	require.Equal(t, expected, output, "they should be equal")
 }
