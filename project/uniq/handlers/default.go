@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"Modules/project/uniq/options"
 	"strings"
+	"uniq/project/uniq/options"
 )
 
 func defaultHandler(lines []string, opt options.Options) (res []string) {
@@ -10,13 +10,15 @@ func defaultHandler(lines []string, opt options.Options) (res []string) {
 		res = append(res, lines[0])
 	}
 
-	compareRule := func(left string, right string) bool {
-		return left == right
-	}
+	compareRule := strings.Compare
 
 	if opt.RegisterNotImportant {
-		compareRule = func(left string, right string) bool {
-			return strings.EqualFold(left, right)
+		compareRule = func(left string, right string) int {
+			if strings.EqualFold(left, right) {
+				return 0
+			}
+
+			return -1
 		}
 	}
 
@@ -24,10 +26,10 @@ func defaultHandler(lines []string, opt options.Options) (res []string) {
 		prev := lines[i-1]
 		cur := lines[i]
 
-		if !compareRule(cur, prev) {
+		if compareRule(cur, prev) != 0 {
 			res = append(res, cur)
 		}
 	}
 
-	return res
+	return
 }

@@ -1,13 +1,18 @@
-package uniq
+package iohandlers
 
 import (
-	"Modules/project/uniq/handlers"
-	"Modules/project/uniq/iohandlers"
-	"Modules/project/uniq/options"
 	"os"
+	"uniq/project/uniq/handlers"
+	"uniq/project/uniq/options"
 )
 
-func showLines(lines []string, opt options.Options) {
+func writeFlow(stream *os.File, lines []string) {
+	for _, val := range lines {
+		stream.WriteString(val)
+	}
+}
+
+func ShowLines(lines []string, opt options.Options) {
 	var stream *os.File = os.Stdout
 
 	if opt.OutputFile != "" {
@@ -19,11 +24,11 @@ func showLines(lines []string, opt options.Options) {
 		defer stream.Close()
 
 		result := handlers.ClassifierHandlers(lines, opt)
-		iohandlers.WriteFlow(stream, result)
+		writeFlow(stream, result)
 
 		return
 	}
 
 	result := handlers.ClassifierHandlers(lines, opt)
-	iohandlers.WriteFlow(stream, result)
+	writeFlow(stream, result)
 }

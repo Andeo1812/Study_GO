@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"Modules/project/uniq/options"
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"uniq/project/uniq/options"
 )
 
 func TestDefaultSetup(t *testing.T) {

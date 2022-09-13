@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"Modules/project/uniq/options"
+	"uniq/project/uniq/options"
 )
 
-type Node struct {
+type node struct {
 	key   string
 	value int
 }
