@@ -1,9 +1,4 @@
-package uniq
-
-// Error cods
-const (
-	wrongCombinationFlags = 4
-)
+package options
 
 // FlagsData
 const (

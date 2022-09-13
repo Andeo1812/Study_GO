@@ -1,4 +1,4 @@
-package uniq
+package iohandlers
 
 import (
 	"bufio"
@@ -55,7 +55,7 @@ func scanLines(flow *os.File, skipWordsCount int, skipSymbolsCount int) (res []s
 	return res
 }
 
-func getLines(path string, skipWords int, skipSymbols int) (res []string) {
+func GetLines(path string, skipWords int, skipSymbols int) (res []string) {
 	var stream *os.File = os.Stdin
 
 	if path != "" {
