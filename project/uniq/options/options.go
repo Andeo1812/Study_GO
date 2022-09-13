@@ -1,9 +1,9 @@
 package options
 
 import (
+	"errors"
 	"flag"
 	"fmt"
-	"os"
 )
 
 type Options struct {
@@ -34,12 +34,15 @@ func GetOptions() Options {
 	o.InputFile = flag.Arg(0)
 	o.OutputFile = flag.Arg(1)
 
-	o.checkOptions()
+	resCheck := o.checkOptions()
+	if resCheck != nil {
+		panic(resCheck)
+	}
 
 	return o
 }
 
-func (o *Options) checkOptions() {
+func (o *Options) checkOptions() error {
 	var countKeys int
 
 	checkField := func(flag bool, count int) int {
@@ -59,6 +62,8 @@ func (o *Options) checkOptions() {
 
 		fmt.Printf(format, showCountStrFlag, showDuplicateStrFlag, showUniqStrFlag)
 
-		os.Exit(4)
+		return errors.New(format)
 	}
+
+	return nil
 }
