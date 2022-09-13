@@ -8,7 +8,7 @@ import (
 
 type Options struct {
 	ShowCountStr         bool
-	ShowUnUniqStr        bool
+	ShowDuplicateStr     bool
 	ShowUniqStr          bool
 	RegisterNotImportant bool
 	SkipCountWords       int
@@ -21,7 +21,7 @@ func GetOptions() Options {
 	var o Options
 
 	flag.BoolVar(&o.ShowCountStr, showCountStrFlag, o.ShowCountStr, showCountStrUsage)
-	flag.BoolVar(&o.ShowUnUniqStr, showUnUniqStrFlag, o.ShowUnUniqStr, showUnUniqStrUsage)
+	flag.BoolVar(&o.ShowDuplicateStr, showDuplicateStrFlag, o.ShowDuplicateStr, showDuplicateStrUsage)
 	flag.BoolVar(&o.ShowUniqStr, showUniqStrFlag, o.ShowUniqStr, showUniqStrUsage)
 
 	flag.BoolVar(&o.RegisterNotImportant, registerNotImportantFlag, o.RegisterNotImportant, registerNotImportantUsage)
@@ -51,13 +51,13 @@ func (o *Options) checkOptions() {
 	}
 
 	countKeys = checkField(o.ShowCountStr, countKeys)
-	countKeys = checkField(o.ShowUnUniqStr, countKeys)
+	countKeys = checkField(o.ShowDuplicateStr, countKeys)
 	countKeys = checkField(o.ShowUniqStr, countKeys)
 
 	if countKeys > 1 {
 		format := "Only one of the keys: -%s, -%s, -%s is possible\n"
 
-		fmt.Printf(format, showCountStrFlag, showUnUniqStrFlag, showUniqStrFlag)
+		fmt.Printf(format, showCountStrFlag, showDuplicateStrFlag, showUniqStrFlag)
 
 		os.Exit(4)
 	}

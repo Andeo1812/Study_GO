@@ -5,8 +5,8 @@ const (
 	showCountStrUsage = "Подсчитать количество повторов строки во входных данных. Вывести это число перед строкой отделив пробелом."
 	showCountStrFlag  = "c"
 
-	showUnUniqStrUsage = "Вывести только те строки, которые повторились во входных данных."
-	showUnUniqStrFlag  = "d"
+	showDuplicateStrUsage = "Вывести только те строки, которые повторились во входных данных."
+	showDuplicateStrFlag  = "d"
 
 	showUniqStrUsage = "Вывести только те строки, которые не повторились во входных данных."
 	showUniqStrFlag  = "u"

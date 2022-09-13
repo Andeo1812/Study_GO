@@ -1,11 +1,10 @@
 package handlers
 
 import (
-	"strings"
 	"uniq/project/uniq/options"
 )
 
-func getUnUniqLines(lines []string, opt options.Options) (res []string) {
+func getDuplicateLines(lines []string, opt options.Options) (res []string) {
 	sequence := make([]node, 0)
 
 	var countNodes int
@@ -15,17 +14,7 @@ func getUnUniqLines(lines []string, opt options.Options) (res []string) {
 		countNodes++
 	}
 
-	compareRule := strings.Compare
-
-	if opt.RegisterNotImportant {
-		compareRule = func(left string, right string) int {
-			if strings.EqualFold(left, right) {
-				return 0
-			}
-
-			return -1
-		}
-	}
+	compareRule := getTypeComparator(opt.RegisterNotImportant)
 
 	for i := 1; i < len(lines); i++ {
 		prev := lines[i-1]
@@ -45,5 +34,5 @@ func getUnUniqLines(lines []string, opt options.Options) (res []string) {
 		}
 	}
 
-	return res
+	return
 }

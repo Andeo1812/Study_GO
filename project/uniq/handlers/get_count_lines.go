@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"strconv"
-	"strings"
 	"uniq/project/uniq/options"
 )
 
@@ -16,17 +15,7 @@ func getCountLines(lines []string, opt options.Options) (res []string) {
 		countNodes++
 	}
 
-	compareRule := strings.Compare
-
-	if opt.RegisterNotImportant {
-		compareRule = func(left string, right string) int {
-			if strings.EqualFold(left, right) {
-				return 0
-			}
-
-			return -1
-		}
-	}
+	compareRule := getTypeComparator(opt.RegisterNotImportant)
 
 	for i := 1; i < len(lines); i++ {
 		prev := lines[i-1]
@@ -44,5 +33,5 @@ func getCountLines(lines []string, opt options.Options) (res []string) {
 		res = append(res, strconv.Itoa(node.value)+" "+node.key)
 	}
 
-	return res
+	return
 }

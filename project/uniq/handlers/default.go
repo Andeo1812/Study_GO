@@ -10,7 +10,7 @@ func defaultHandlerLines(lines []string, opt options.Options) (res []string) {
 		res = append(res, lines[0])
 	}
 
-	compareRule := strings.Compare
+	compareRule := getTypeComparator(opt.RegisterNotImportant)
 
 	if opt.RegisterNotImportant {
 		compareRule = func(left string, right string) int {

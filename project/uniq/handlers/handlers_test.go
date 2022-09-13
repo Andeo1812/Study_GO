@@ -30,8 +30,9 @@ func TestDefaultSetup(t *testing.T) {
 
 func TestAllSetup(t *testing.T) {
 	var opt options.Options
+	opt.ShowCountStr = true
 
-	var input1 = []string{"I love music.",
+	var initData = []string{"I love music.",
 		"I love music.",
 		"I love music.",
 		"",
@@ -40,22 +41,21 @@ func TestAllSetup(t *testing.T) {
 		"Thanks.",
 		"I love music of Kartik.",
 		"I love music of Kartik."}
-
-	opt.ShowCountStr = true
 
 	expected := []string{"3 I love music.",
 		"1 ",
 		"2 I love music of Kartik.",
 		"1 Thanks.",
 		"2 I love music of Kartik."}
-	output := ClassifierHandlers(input1, opt)
+	output := ClassifierHandlers(initData, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
 func TestUniqSetup(t *testing.T) {
 	var opt options.Options
+	opt.ShowUniqStr = true
 
-	var input1 = []string{"I love music.",
+	var initData = []string{"I love music.",
 		"I love music.",
 		"I love music.",
 		"",
@@ -65,18 +65,17 @@ func TestUniqSetup(t *testing.T) {
 		"I love music of Kartik.",
 		"I love music of Kartik."}
 
-	opt.ShowUniqStr = true
-
 	expected := []string{"",
 		"Thanks."}
-	output := ClassifierHandlers(input1, opt)
+	output := ClassifierHandlers(initData, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
 func TestUnUniqSetup(t *testing.T) {
 	var opt options.Options
+	opt.ShowDuplicateStr = true
 
-	var input1 = []string{"I love music.",
+	var initData = []string{"I love music.",
 		"I love music.",
 		"I love music.",
 		"",
@@ -86,19 +85,18 @@ func TestUnUniqSetup(t *testing.T) {
 		"I love music of Kartik.",
 		"I love music of Kartik."}
 
-	opt.ShowUnUniqStr = true
-
 	expected := []string{"I love music.",
 		"I love music of Kartik.",
 		"I love music of Kartik."}
-	output := ClassifierHandlers(input1, opt)
+	output := ClassifierHandlers(initData, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
 func TestDefaultWithoutRegSetup(t *testing.T) {
 	var opt options.Options
+	opt.RegisterNotImportant = true
 
-	var input2 = []string{"I LOVE MUSIC.",
+	var initData = []string{"I LOVE MUSIC.",
 		"I love music.",
 		"I LoVe MuSiC.",
 		"",
@@ -108,13 +106,52 @@ func TestDefaultWithoutRegSetup(t *testing.T) {
 		"I love music of kartik.",
 		"I love MuSIC of Kartik."}
 
-	opt.RegisterNotImportant = true
-
 	expected := []string{"I LOVE MUSIC.",
 		"",
 		"I love MuSIC of Kartik.",
 		"Thanks.",
 		"I love music of kartik."}
-	output := ClassifierHandlers(input2, opt)
+	output := ClassifierHandlers(initData, opt)
+	assert.Equal(t, expected, output, "they should be equal")
+}
+
+func TestCombinationSetup(t *testing.T) {
+	var opt options.Options
+	opt.RegisterNotImportant = true
+	opt.ShowCountStr = true
+
+	var initData = []string{"I LOVE MUSIC.",
+		"I love music.",
+		"I LoVe MuSiC.",
+		"",
+		"I love MuSIC of Kartik.",
+		"I love music of kartik.",
+		"Thanks.",
+		"I love music of kartik.",
+		"I love MuSIC of Kartik."}
+
+	expected := []string{"3 I LOVE MUSIC.",
+		"1 ",
+		"2 I love MuSIC of Kartik.",
+		"1 Thanks.",
+		"2 I love music of kartik."}
+	output := ClassifierHandlers(initData, opt)
+	assert.Equal(t, expected, output, "they should be equal")
+
+	opt.ShowCountStr = false
+	opt.ShowUniqStr = true
+
+	expected = []string{"",
+		"Thanks."}
+	output = ClassifierHandlers(initData, opt)
+	assert.Equal(t, expected, output, "they should be equal")
+
+	opt.ShowUniqStr = false
+	opt.ShowDuplicateStr = true
+
+	expected = []string{"I LOVE MUSIC.",
+		"I love MuSIC of Kartik.",
+		"I love music of kartik."}
+	output = ClassifierHandlers(initData, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }
