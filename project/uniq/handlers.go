@@ -1,14 +1,13 @@
 package uniq
 
 import (
-	"os"
 	"strconv"
 	"strings"
 )
 
-func showDefault(flow *os.File, lines []string, opt options) {
+func showDefault(lines []string, opt options) (res []string) {
 	if len(lines) > 0 {
-		flow.WriteString(lines[0] + "\n")
+		res = append(res, lines[0])
 	}
 
 	compareRule := func(left string, right string) bool {
@@ -26,9 +25,11 @@ func showDefault(flow *os.File, lines []string, opt options) {
 		cur := lines[i]
 
 		if !compareRule(cur, prev) {
-			flow.WriteString(cur + "\n")
+			res = append(res, cur)
 		}
 	}
+
+	return res
 }
 
 type Node struct {
@@ -36,7 +37,7 @@ type Node struct {
 	value int
 }
 
-func showAll(flow *os.File, lines []string, opt options) {
+func showAll(lines []string, opt options) (res []string) {
 	sequence := []Node{}
 
 	var countNodes int
@@ -69,11 +70,13 @@ func showAll(flow *os.File, lines []string, opt options) {
 	}
 
 	for _, node := range sequence {
-		flow.WriteString(strconv.Itoa(node.value) + " " + node.key + "\n")
+		res = append(res, strconv.Itoa(node.value)+" "+node.key)
 	}
+
+	return res
 }
 
-func showUniq(flow *os.File, lines []string, opt options) {
+func showUniq(lines []string, opt options) (res []string) {
 	sequence := []Node{}
 
 	var countNodes int
@@ -107,12 +110,14 @@ func showUniq(flow *os.File, lines []string, opt options) {
 
 	for _, node := range sequence {
 		if node.value == 1 {
-			flow.WriteString(node.key + "\n")
+			res = append(res, node.key)
 		}
 	}
+
+	return res
 }
 
-func showUnUniq(flow *os.File, lines []string, opt options) {
+func showUnUniq(lines []string, opt options) (res []string) {
 	sequence := []Node{}
 
 	var countNodes int
@@ -146,7 +151,9 @@ func showUnUniq(flow *os.File, lines []string, opt options) {
 
 	for _, node := range sequence {
 		if node.value != 1 {
-			flow.WriteString(node.key + "\n")
+			res = append(res, node.key)
 		}
 	}
+
+	return res
 }

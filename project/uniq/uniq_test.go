@@ -5,6 +5,26 @@ import (
 	"testing"
 )
 
+var input1 = []string{"I love music.",
+	"I love music.",
+	"I love music.",
+	"",
+	"I love music of Kartik.",
+	"I love music of Kartik.",
+	"Thanks.",
+	"I love music of Kartik.",
+	"I love music of Kartik."}
+
+var input2 = []string{"I LOVE MUSIC.",
+	"I love music.",
+	"I LoVe MuSiC.",
+	"",
+	"I love MuSIC of Kartik.",
+	"I love music of kartik.",
+	"Thanks.",
+	"I love music of kartik.",
+	"I love MuSIC of Kartik."}
+
 func TestSkipSymbols(t *testing.T) {
 	var input string = "1 22 333 4444!"
 
@@ -53,24 +73,11 @@ func TestGlobalDefaultSetup(t *testing.T) {
 	opt.outputFile = "tmp.txt"
 
 	expected := []string{"I love music.",
-		"I love music.",
-		"I love music.",
-		"",
-		"I love music of Kartik.",
-		"I love music of Kartik.",
-		"Thanks.",
-		"I love music of Kartik.",
-		"I love music of Kartik."}
-	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
-	assert.Equal(t, expected, output, "they should be equal")
-
-	expected = []string{"I love music.",
 		"",
 		"I love music of Kartik.",
 		"Thanks.",
 		"I love music of Kartik."}
-	showLines(output, opt)
-	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	output := classifierHandlers(input1, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
@@ -81,15 +88,12 @@ func TestGlobalAllSetup(t *testing.T) {
 	opt.outputFile = "tmp.txt"
 	opt.showCountStr = true
 
-	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
-
 	expected := []string{"3 I love music.",
 		"1 ",
 		"2 I love music of Kartik.",
 		"1 Thanks.",
 		"2 I love music of Kartik."}
-	showLines(output, opt)
-	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	output := classifierHandlers(input1, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
@@ -100,12 +104,9 @@ func TestGlobalUniqSetup(t *testing.T) {
 	opt.outputFile = "tmp.txt"
 	opt.showUniqStr = true
 
-	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
-
 	expected := []string{"",
 		"Thanks."}
-	showLines(output, opt)
-	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	output := classifierHandlers(input1, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
@@ -116,13 +117,10 @@ func TestGlobalUnUniqSetup(t *testing.T) {
 	opt.outputFile = "tmp.txt"
 	opt.showUnUniqStr = true
 
-	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
-
 	expected := []string{"I love music.",
 		"I love music of Kartik.",
 		"I love music of Kartik."}
-	showLines(output, opt)
-	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	output := classifierHandlers(input1, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
@@ -133,14 +131,11 @@ func TestGlobalDefaultWithoutRegSetup(t *testing.T) {
 	opt.outputFile = "tmp.txt"
 	opt.registerNotImportant = true
 
-	output := getLines(opt.inputFile, opt.skipCountWords, opt.skipCountSymbols)
-
 	expected := []string{"I LOVE MUSIC.",
 		"",
 		"I love MuSIC of Kartik.",
 		"Thanks.",
 		"I love music of kartik."}
-	showLines(output, opt)
-	output = getLines(opt.outputFile, opt.skipCountWords, opt.skipCountSymbols)
+	output := classifierHandlers(input2, opt)
 	assert.Equal(t, expected, output, "they should be equal")
 }

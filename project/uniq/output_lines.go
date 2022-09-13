@@ -13,23 +13,31 @@ func showLines(lines []string, opt options) {
 
 		defer stream.Close()
 
-		classifierHandlers(stream, lines, opt)
+		result := classifierHandlers(lines, opt)
+		writeFlow(stream, result)
 
 		return
 	}
 
-	classifierHandlers(stream, lines, opt)
+	result := classifierHandlers(lines, opt)
+	writeFlow(stream, result)
 }
 
-func classifierHandlers(stream *os.File, lines []string, opt options) {
+func writeFlow(stream *os.File, lines []string) {
+	for _, val := range lines {
+		stream.WriteString(val)
+	}
+}
+
+func classifierHandlers(lines []string, opt options) (res []string) {
 	switch {
 	case opt.showCountStr:
-		showAll(stream, lines, opt)
+		return showAll(lines, opt)
 	case opt.showUniqStr:
-		showUniq(stream, lines, opt)
+		return showUniq(lines, opt)
 	case opt.showUnUniqStr:
-		showUnUniq(stream, lines, opt)
+		return showUnUniq(lines, opt)
 	default:
-		showDefault(stream, lines, opt)
+		return showDefault(lines, opt)
 	}
 }

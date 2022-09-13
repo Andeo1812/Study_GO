@@ -1,6 +1,6 @@
 package uniq
 
-func Handling() {
+func Work() {
 	options := getOptions()
 
 	lines := getLines(options.inputFile, options.skipCountWords, options.skipCountSymbols)
