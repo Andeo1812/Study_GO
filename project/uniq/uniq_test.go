@@ -66,7 +66,7 @@ func TestSkipCombination(t *testing.T) {
 	assert.Equal(t, output, resSkip, "they should be equal")
 }
 
-func TestGlobalDefaultSetup(t *testing.T) {
+func TestDefaultSetup(t *testing.T) {
 	var opt options
 
 	opt.inputFile = "tests/Text.txt"
@@ -81,7 +81,7 @@ func TestGlobalDefaultSetup(t *testing.T) {
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
-func TestGlobalAllSetup(t *testing.T) {
+func TestAllSetup(t *testing.T) {
 	var opt options
 
 	opt.inputFile = "tests/Text.txt"
@@ -97,7 +97,7 @@ func TestGlobalAllSetup(t *testing.T) {
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
-func TestGlobalUniqSetup(t *testing.T) {
+func TestUniqSetup(t *testing.T) {
 	var opt options
 
 	opt.inputFile = "tests/Text.txt"
@@ -110,7 +110,7 @@ func TestGlobalUniqSetup(t *testing.T) {
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
-func TestGlobalUnUniqSetup(t *testing.T) {
+func TestUnUniqSetup(t *testing.T) {
 	var opt options
 
 	opt.inputFile = "tests/Text.txt"
@@ -124,7 +124,7 @@ func TestGlobalUnUniqSetup(t *testing.T) {
 	assert.Equal(t, expected, output, "they should be equal")
 }
 
-func TestGlobalDefaultWithoutRegSetup(t *testing.T) {
+func TestDefaultWithoutRegSetup(t *testing.T) {
 	var opt options
 
 	opt.inputFile = "tests/TextRegistr.txt"
