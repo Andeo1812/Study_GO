@@ -1,7 +1,6 @@
-package calc
+package parser
 
 import (
-	"Modules/project/calc/iohandlers"
 	"errors"
 	"strconv"
 	"strings"
@@ -15,7 +14,7 @@ func isDigit(digits string, value string) bool {
 	return false
 }
 
-func getNumber(expression string) (float64, error) {
+func GetNumber(expression string) (float64, error) {
 	var iterator = 0
 	for _, val := range expression {
 		if !isDigit(lex.digit, string(val)) {
@@ -30,15 +29,4 @@ func getNumber(expression string) (float64, error) {
 	}
 
 	return 0, errors.New("error convert")
-}
-
-func Work() {
-	expression := iohandlers.Input()
-
-	res, resGet := getNumber(expression)
-	if resGet != nil {
-		panic("Bad input - error conversation")
-	}
-
-	iohandlers.Output(res)
 }
