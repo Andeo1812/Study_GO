@@ -2,6 +2,7 @@ package parser
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -15,19 +16,25 @@ func isDigit(value string) bool {
 }
 
 func GetNumber(expression string) (int, float64, error) {
-	var iterator = 0
-	for _, val := range expression {
-		if !isDigit(string(val)) {
-			res, resConversation := strconv.ParseFloat(expression[:iterator], 64)
-			return iterator, res, resConversation
-		}
+	fmt.Println(expression)
+	var iter = 0
 
-		iterator++
+	if string(expression[0]) == lex.minus {
+		iter = 1
 	}
 
-	if iterator == len(expression) {
-		res, resConversation := strconv.ParseFloat(expression[:iterator], 64)
-		return iterator, res, resConversation
+	for ; iter < len(expression); iter++ {
+		if !isDigit(string(expression[iter])) {
+			res, resConversation := strconv.ParseFloat(expression[:iter], 64)
+
+			return iter, res, resConversation
+		}
+
+	}
+
+	if iter == len(expression) {
+		res, resConversation := strconv.ParseFloat(expression[:iter], 64)
+		return iter, res, resConversation
 	}
 
 	return 0, 0, errors.New("error convert")

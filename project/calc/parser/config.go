@@ -10,4 +10,4 @@ type lexemes struct {
 	digit      string
 }
 
-var lex lexemes = lexemes{"+", "-", "*", "/", "(", ")", "123456789"}
+var lex lexemes = lexemes{"+", "-", "*", "/", "(", ")", "0123456789"}
