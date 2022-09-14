@@ -2,7 +2,7 @@
 
 all: launch
 
-TARGET = ./project/main.go
+TARGET = ./project/calc.go
 
 launch:
 	go run ${TARGET}
