@@ -6,27 +6,29 @@ import (
 	"strings"
 )
 
-func isDigit(digits string, value string) bool {
-	if strings.Contains(digits, value) || value == "." {
+func isDigit(value string) bool {
+	if strings.Contains(lex.digit, value) || value == "." {
 		return true
 	}
 
 	return false
 }
 
-func GetNumber(expression string) (float64, error) {
+func GetNumber(expression string) (int, float64, error) {
 	var iterator = 0
 	for _, val := range expression {
-		if !isDigit(lex.digit, string(val)) {
-			return strconv.ParseFloat(expression[:iterator], 64)
+		if !isDigit(string(val)) {
+			res, resConversation := strconv.ParseFloat(expression[:iterator], 64)
+			return iterator, res, resConversation
 		}
 
 		iterator++
 	}
 
 	if iterator == len(expression) {
-		return strconv.ParseFloat(expression, 64)
+		res, resConversation := strconv.ParseFloat(expression[:iterator], 64)
+		return iterator, res, resConversation
 	}
 
-	return 0, errors.New("error convert")
+	return 0, 0, errors.New("error convert")
 }

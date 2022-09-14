@@ -8,10 +8,7 @@ import (
 func main() {
 	expression := iohandlers.Input()
 
-	res, resGet := parser.GetNumber(expression)
-	if resGet != nil {
-		panic("Bad input - error conversation")
-	}
+	res := parser.Calculate(expression)
 
 	iohandlers.Output(res)
 }
