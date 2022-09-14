@@ -8,7 +8,7 @@ import (
 func main() {
 	expression := iohandlers.Input()
 
-	res := parser.Calculate(expression)
+	res := parser.InitCalculate(expression)
 
 	iohandlers.Output(res)
 }
