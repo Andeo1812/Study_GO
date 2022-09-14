@@ -1,7 +1,5 @@
 package parser
 
-import "fmt"
-
 type node struct {
 	number float64
 	length int
@@ -12,10 +10,10 @@ func Calculate(expression string) float64 {
 
 	var i int = 0
 
-	for ; i < len(expression); {
+	for i < len(expression) {
 		symbol := string(expression[i])
 
-		fmt.Println(symbol)
+		//  fmt.Println(symbol)
 
 		switch {
 		case isDigit(symbol) || symbol == lex.minus:
@@ -28,21 +26,19 @@ func Calculate(expression string) float64 {
 
 			i += lengthNumber
 
-			fmt.Println("params number", number, lengthNumber, expression)
+			//  fmt.Println("params number", number, lengthNumber, expression)
 		case symbol == lex.plus:
 			accum += Calculate(expression[i+1:])
 
-			return accum
-		case symbol == lex.minus:
 			return accum
 		case symbol == lex.multiply:
 			accum *= Calculate(expression[i+1:])
 
 			return accum
-			//case symbol == lex.divide:
-			//	accum /= Calculate(expression[i+1:])
-			//
-			//	return accum
+		case symbol == lex.divide:
+			accum /= Calculate(expression[i+1:])
+
+			return accum
 		}
 	}
 

@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -16,7 +15,7 @@ func isDigit(value string) bool {
 }
 
 func GetNumber(expression string) (int, float64, error) {
-	fmt.Println(expression)
+	//  fmt.Println(expression)
 	var iter = 0
 
 	if string(expression[0]) == lex.minus {

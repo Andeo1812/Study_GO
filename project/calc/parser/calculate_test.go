@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-//func TestSum(t *testing.T) {
-//	var input string = "10+10+10"
-//
-//	// skip many symbols
-//	var output float64 = 30
-//	resExpression := Calculate(input)
-//	require.Equal(t, output, resExpression, "they should be equal", input)
-//}
+func TestSum(t *testing.T) {
+	var input string = "10+10+10"
+
+	// skip many symbols
+	var output float64 = 30
+	resExpression := Calculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+}
 
 func TestSub(t *testing.T) {
 	var input string = "10-10"
@@ -44,20 +44,20 @@ func TestSub(t *testing.T) {
 	require.Equal(t, output, resExpression, "they should be equal", input)
 }
 
-//func TestMultiply(t *testing.T) {
-//	var input string = "10*10*10"
-//
-//	// skip many symbols
-//	var output float64 = 1000
-//	resExpression := Calculate(input)
-//	require.Equal(t, output, resExpression, "they should be equal", input)
-//}
+func TestMultiply(t *testing.T) {
+	var input string = "10*10*10"
 
-//func TestDivide(t *testing.T) {
-//	var input string = "1000/10/10"
-//
-//	// skip many symbols
-//	var output float64 = 10
-//	resExpression := Calculate(input)
-//	require.Equal(t, output, resExpression, "they should be equal", input)
-//}
+	// skip many symbols
+	var output float64 = 1000
+	resExpression := Calculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+}
+
+func TestDivide(t *testing.T) {
+	var input string = "1000/10/10"
+
+	// skip many symbols
+	var output float64 = 10
+	resExpression := Calculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+}
