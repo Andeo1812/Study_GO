@@ -42,8 +42,6 @@ func actionDiv(accum float64, expression string) (float64, int) {
 			pos += offset
 		case lex.divide:
 			accum /= number
-		default:
-			return accum / number, pos
 		}
 	}
 
@@ -90,8 +88,6 @@ func actionMul(accum float64, expression string) (float64, int) {
 			accum = res
 
 			pos += offset
-		default:
-			return accum * number, pos
 		}
 	}
 
@@ -113,29 +109,22 @@ func actionSum(accum float64, expression string) (float64, int) {
 		symbol := string(expression[pos])
 		pos++
 
+		var res float64
+		var offset int
+
 		switch symbol {
 		case lex.plus:
 			accum += number
 		case lex.minus:
-			res, offset := actionSub(number, expression[pos:])
-
-			accum += res
-
-			pos += offset
-
+			res, offset = actionSub(number, expression[pos:])
 		case lex.multiply:
-			res, offset := actionMul(number, expression[pos:])
-
-			accum += res
-
-			pos += offset
+			res, offset = actionMul(number, expression[pos:])
 		case lex.divide:
-			res, offset := actionDiv(number, expression[pos:])
-
-			accum += res
-
-			pos += offset
+			res, offset = actionDiv(number, expression[pos:])
 		}
+
+		accum += res
+		pos += offset
 	}
 
 	return accum, pos
@@ -156,28 +145,22 @@ func actionSub(accum float64, expression string) (float64, int) {
 		symbol := string(expression[pos])
 		pos++
 
+		var res float64
+		var offset int
+
 		switch symbol {
 		case lex.plus:
-			res, offset := actionSum(-number, expression[pos:])
-
-			accum += res
-
-			pos += offset
+			res, offset = actionSum(-number, expression[pos:])
 		case lex.minus:
 			accum -= number
 		case lex.multiply:
-			res, offset := actionMul(-number, expression[pos:])
-
-			accum += res
-
-			pos += offset
+			res, offset = actionMul(-number, expression[pos:])
 		case lex.divide:
-			res, offset := actionDiv(-number, expression[pos:])
-
-			accum += res
-
-			pos += offset
+			res, offset = actionDiv(-number, expression[pos:])
 		}
+
+		accum += res
+		pos += offset
 	}
 
 	return accum, pos
