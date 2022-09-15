@@ -58,8 +58,8 @@ func TestCombinationSubSumMul(t *testing.T) {
 	resExpression := InitCalculate(input)
 	require.Equal(t, output, resExpression, "they should be equal", input)
 
-	input = "2+2*2-2-2*2+2"
-	output = 2
+	input = "2+2*2-2-2*2+2-2"
+	output = 0
 	resExpression = InitCalculate(input)
 	require.Equal(t, output, resExpression, "they should be equal", input)
 }
@@ -70,8 +70,8 @@ func TestDivide(t *testing.T) {
 	resExpression := InitCalculate(input)
 	require.Equal(t, output, resExpression, "they should be equal", input)
 
-	input = "6+300/25/4+6"
-	output = 15
+	input = "300/25/4+41"
+	output = 44
 	resExpression = InitCalculate(input)
 	require.Equal(t, output, resExpression, "they should be equal", input)
 }

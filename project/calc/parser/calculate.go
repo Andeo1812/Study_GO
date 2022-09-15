@@ -3,7 +3,7 @@ package parser
 import "fmt"
 
 func actionDiv(accum float64, expression string) float64 {
-	fmt.Println("DivAction:", accum, expression)
+	fmt.Println("Div:", accum, expression)
 	var i int = 0
 
 	for i < len(expression) {
@@ -33,7 +33,7 @@ func actionDiv(accum float64, expression string) float64 {
 }
 
 func actionMul(accum float64, expression string) float64 {
-	fmt.Println("MulAction:", accum, expression)
+	fmt.Println("Mul:", accum, expression)
 	var i int = 0
 
 	for i < len(expression) {
@@ -63,7 +63,7 @@ func actionMul(accum float64, expression string) float64 {
 }
 
 func actionSum(accum float64, expression string) float64 {
-	fmt.Println("SumAction:", accum, expression)
+	fmt.Println("Sum:", accum, expression)
 	var i int = 0
 
 	for i < len(expression) {
@@ -98,7 +98,6 @@ func actionSub(accum float64, expression string) float64 {
 
 	for i < len(expression) {
 		number, lengthNumber := GetNumber(expression[i:])
-
 		i += lengthNumber
 
 		if len(expression) == i {
@@ -106,7 +105,6 @@ func actionSub(accum float64, expression string) float64 {
 		}
 
 		symbol := string(expression[i])
-
 		i++
 
 		switch symbol {
