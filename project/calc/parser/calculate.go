@@ -55,7 +55,7 @@ func actionMul(accum float64, expression string) float64 {
 		case lex.multiply:
 			accum *= number
 		case lex.divide:
-			return actionDiv(number*accum, expression[i:])
+			return accum + actionDiv(number, expression[i:])
 		}
 	}
 
@@ -85,7 +85,7 @@ func actionSum(accum float64, expression string) float64 {
 		case lex.multiply:
 			return accum + actionMul(number, expression[i:])
 		case lex.divide:
-			return actionDiv(number*accum, expression[i:])
+			return accum + actionDiv(number, expression[i:])
 		}
 	}
 
@@ -115,9 +115,9 @@ func actionSub(accum float64, expression string) float64 {
 		case lex.minus:
 			accum -= number
 		case lex.multiply:
-			return accum + actionMul(-number, expression[i:])
+			return actionMul(-number*accum, expression[i:])
 		case lex.divide:
-			return actionDiv(number*accum, expression[i:])
+			return actionDiv(-number*accum, expression[i:])
 		}
 	}
 
@@ -125,5 +125,5 @@ func actionSub(accum float64, expression string) float64 {
 }
 
 func InitCalculate(expression string) float64 {
-	return actionSum(1, expression)
+	return actionSum(0, expression)
 }
