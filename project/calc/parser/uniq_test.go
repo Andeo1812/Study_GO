@@ -10,8 +10,7 @@ func TestGetNumber(t *testing.T) {
 
 	// skip many symbols
 	var output float64 = -10
-	length, number, errGet := GetNumber(input)
-	require.Nil(t, errGet)
+	number, length := GetNumber(input)
 	require.Equal(t, length, 3, "they should be equal", input)
 	require.Equal(t, output, number, "they should be equal", input)
 
@@ -19,8 +18,7 @@ func TestGetNumber(t *testing.T) {
 
 	// skip many symbols
 	output = 10
-	length, number, errGet = GetNumber(input)
-	require.Nil(t, errGet)
+	number, length = GetNumber(input)
 	require.Equal(t, length, 2, "they should be equal", input)
 	require.Equal(t, output, number, "they should be equal", input)
 }

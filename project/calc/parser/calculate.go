@@ -2,97 +2,128 @@ package parser
 
 import "fmt"
 
-type node struct {
-	number float64
-	length int
+func actionDiv(accum float64, expression string) float64 {
+	fmt.Println("DivAction:", accum, expression)
+	var i int = 0
+
+	for i < len(expression) {
+		number, lengthNumber := GetNumber(expression[i:])
+		i += lengthNumber
+
+		if len(expression) == i {
+			return accum / number
+		}
+
+		symbol := string(expression[i])
+		i++
+
+		switch symbol {
+		case lex.plus:
+			return actionSum(number+accum, expression[i:])
+		case lex.minus:
+			return actionSub(number+accum, expression[i:])
+		case lex.multiply:
+			return actionMul(number*accum, expression[i:])
+		case lex.divide:
+			accum /= number
+		}
+	}
+
+	return accum
 }
 
-func action(accum float64, expression string, operation string) (float64, int) {
-	fmt.Println("Init", accum, expression)
+func actionMul(accum float64, expression string) float64 {
+	fmt.Println("MulAction:", accum, expression)
+	var i int = 0
 
-	if len(expression) == 0 {
-		return accum, 0
+	for i < len(expression) {
+		number, lengthNumber := GetNumber(expression[i:])
+		i += lengthNumber
+
+		if len(expression) == i {
+			return accum * number
+		}
+
+		symbol := string(expression[i])
+		i++
+
+		switch symbol {
+		case lex.plus:
+			return actionSum(number+accum, expression[i:])
+		case lex.minus:
+			return actionSub(number+accum, expression[i:])
+		case lex.multiply:
+			accum *= number
+		case lex.divide:
+			return actionDiv(number*accum, expression[i:])
+		}
 	}
 
-	lengthNumber, number, resGet := GetNumber(expression)
-	if resGet != nil {
-		panic(resGet)
-	}
-
-	switch {
-	case operation == lex.multiply:
-		accum *= number
-	case operation == lex.divide:
-		accum /= number
-	}
-
-	if len(expression[lengthNumber:]) == 0 {
-		return accum, 0
-	}
-
-	symbol := string(expression[lengthNumber])
-
-	fmt.Println("res", accum)
-
-	fmt.Println(symbol)
-
-	switch {
-	case symbol == lex.multiply || symbol == lex.divide:
-		return action(accum, expression[lengthNumber+1:], symbol)
-	default:
-		return accum, lengthNumber
-	}
+	return accum
 }
 
-func Calculate(accum float64, expression string, operation string) float64 {
-	fmt.Println(accum)
+func actionSum(accum float64, expression string) float64 {
+	fmt.Println("SumAction:", accum, expression)
+	var i int = 0
 
-	if len(expression) == 0 {
-		return accum
+	for i < len(expression) {
+		number, lengthNumber := GetNumber(expression[i:])
+		i += lengthNumber
+
+		if len(expression) == i {
+			return accum + number
+		}
+
+		symbol := string(expression[i])
+		i++
+
+		switch symbol {
+		case lex.plus:
+			accum += number
+		case lex.minus:
+			return actionSub(number+accum, expression[i:])
+		case lex.multiply:
+			return accum + actionMul(number, expression[i:])
+		case lex.divide:
+			return actionDiv(number*accum, expression[i:])
+		}
 	}
 
-	symbol := string(expression[0])
+	return accum
+}
 
-	fmt.Println(symbol)
+func actionSub(accum float64, expression string) float64 {
+	fmt.Println("SubAction:", accum, expression)
+	var i int = 0
 
-	switch {
-	case isDigit(symbol):
-		lengthNumber, number, resGet := GetNumber(expression)
-		if resGet != nil {
-			panic(resGet)
+	for i < len(expression) {
+		number, lengthNumber := GetNumber(expression[i:])
+
+		i += lengthNumber
+
+		if len(expression) == i {
+			return accum - number
 		}
 
-		fmt.Println("params number", number, lengthNumber, expression)
+		symbol := string(expression[i])
 
-		if operation == lex.minus {
-			return Calculate(-number, expression[lengthNumber:], symbol)
+		i++
+
+		switch symbol {
+		case lex.plus:
+			return actionSum(-number+accum, expression[i:])
+		case lex.minus:
+			accum -= number
+		case lex.multiply:
+			return accum + actionMul(-number, expression[i:])
+		case lex.divide:
+			return actionDiv(number*accum, expression[i:])
 		}
-
-		return Calculate(number, expression[lengthNumber:], symbol)
-	case symbol == lex.plus || symbol == lex.minus:
-		fmt.Println("plus-minus", operation)
-		return accum + Calculate(accum, expression[1:], symbol)
-	case symbol == lex.multiply || symbol == lex.divide:
-		fmt.Println("M_D", operation)
-		res, offset := action(accum, expression[1:], symbol)
-
-		fmt.Println("M_D", operation)
-
-		if len(expression) == offset {
-			return accum + res
-		}
-
-		return accum + res + Calculate(accum, expression[offset:], symbol)
-	default:
-		panic("No such symbol")
 	}
+
+	return accum
 }
 
 func InitCalculate(expression string) float64 {
-	return Calculate(0, expression, "")
+	return actionSum(1, expression)
 }
-
-//  	case symbol == lex.multiply:
-//			return accum * Calculate(accum, expression[1:], symbol)
-//		case symbol == lex.divide:
-//			return accum / accum / Calculate(accum, expression[1:], symbol)
