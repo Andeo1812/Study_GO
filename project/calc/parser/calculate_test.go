@@ -51,6 +51,11 @@ func TestMultiply(t *testing.T) {
 	var output float64 = 90
 	resExpression := InitCalculate(input)
 	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "6*3*5+4"
+	output = 94
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
 }
 func TestCombinationSubSumMul(t *testing.T) {
 	var input string = "2+2*2"
@@ -74,17 +79,51 @@ func TestDivide(t *testing.T) {
 	output = 44
 	resExpression = InitCalculate(input)
 	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "300/25/4+41"
+	output = 44
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "100-300/25/4-41"
+	output = 56
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "300/25*5"
+	output = 60
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "10/2*4/5"
+	output = 4
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
 }
 
-//
-//func TestCombination(t *testing.T) {
-//	var input string = "2+2*10"
-//	var output float64 = 22
-//	resExpression := InitCalculate(input)
-//	require.Equal(t, output, resExpression, "they should be equal", input)
-//
-//	input = "2+2*2/2"
-//	output = 4
-//	resExpression = InitCalculate(input)
-//	require.Equal(t, output, resExpression, "they should be equal", input)
-//}
+func TestCombination(t *testing.T) {
+	var input string = "2+2*10"
+	var output float64 = 22
+	resExpression := InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "2+2*2/2"
+	output = 4
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "2/2-2"
+	output = -1
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "2+2*2/2+2+2"
+	output = 8
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "2/2+2"
+	output = 3
+	resExpression = InitCalculate(input)
+	require.Equal(t, output, resExpression, "they should be equal", input)
+}

@@ -2,126 +2,188 @@ package parser
 
 import "fmt"
 
-func actionDiv(accum float64, expression string) float64 {
+func actionDiv(accum float64, expression string) (float64, int) {
 	fmt.Println("Div:", accum, expression)
-	var i int = 0
+	var pos int = 0
 
-	for i < len(expression) {
-		number, lengthNumber := GetNumber(expression[i:])
-		i += lengthNumber
+	for pos < len(expression) {
+		number, lengthNumber := GetNumber(expression[pos:])
+		pos += lengthNumber
 
-		if len(expression) == i {
-			return accum / number
+		if len(expression) == pos {
+			return accum / number, pos
 		}
 
-		symbol := string(expression[i])
-		i++
+		symbol := string(expression[pos])
+		pos++
 
 		switch symbol {
 		case lex.plus:
-			return actionSum(number+accum, expression[i:])
+			accum /= number
+
+			res, offset := actionSum(accum, expression[pos:])
+
+			pos += offset
+
+			return res, pos
 		case lex.minus:
-			return actionSub(number+accum, expression[i:])
+			accum /= number
+
+			res, offset := actionSub(accum, expression[pos:])
+
+			pos += offset
+
+			return res, pos
 		case lex.multiply:
-			return actionMul(number*accum, expression[i:])
+			res, offset := actionMul(accum/number, expression[pos:])
+
+			accum = res
+
+			pos += offset
 		case lex.divide:
 			accum /= number
+		default:
+			return accum / number, pos
 		}
 	}
 
-	return accum
+	return accum, pos
 }
 
-func actionMul(accum float64, expression string) float64 {
+func actionMul(accum float64, expression string) (float64, int) {
 	fmt.Println("Mul:", accum, expression)
-	var i int = 0
+	var pos int = 0
 
-	for i < len(expression) {
-		number, lengthNumber := GetNumber(expression[i:])
-		i += lengthNumber
+	for pos < len(expression) {
+		number, lengthNumber := GetNumber(expression[pos:])
+		pos += lengthNumber
 
-		if len(expression) == i {
-			return accum * number
+		if len(expression) == pos {
+			return accum * number, pos
 		}
 
-		symbol := string(expression[i])
-		i++
+		symbol := string(expression[pos])
+		pos++
 
 		switch symbol {
 		case lex.plus:
-			return actionSum(number+accum, expression[i:])
+			accum *= number
+
+			res, offset := actionSum(accum, expression[pos:])
+
+			pos += offset
+
+			return res, pos
 		case lex.minus:
-			return actionSub(number+accum, expression[i:])
+			accum *= number
+
+			res, offset := actionSub(accum, expression[pos:])
+
+			pos += offset
+
+			return res, pos
 		case lex.multiply:
 			accum *= number
 		case lex.divide:
-			return accum + actionDiv(number, expression[i:])
+			res, offset := actionDiv(accum*number, expression[pos:])
+
+			accum = res
+
+			pos += offset
+		default:
+			return accum * number, pos
 		}
 	}
 
-	return accum
+	return accum, pos
 }
 
-func actionSum(accum float64, expression string) float64 {
+func actionSum(accum float64, expression string) (float64, int) {
 	fmt.Println("Sum:", accum, expression)
-	var i int = 0
+	var pos int = 0
 
-	for i < len(expression) {
-		number, lengthNumber := GetNumber(expression[i:])
-		i += lengthNumber
+	for pos < len(expression) {
+		number, lengthNumber := GetNumber(expression[pos:])
+		pos += lengthNumber
 
-		if len(expression) == i {
-			return accum + number
+		if len(expression) == pos {
+			return accum + number, pos
 		}
 
-		symbol := string(expression[i])
-		i++
+		symbol := string(expression[pos])
+		pos++
 
 		switch symbol {
 		case lex.plus:
 			accum += number
 		case lex.minus:
-			return actionSub(number+accum, expression[i:])
+			res, offset := actionSub(number, expression[pos:])
+
+			accum += res
+
+			pos += offset
+
 		case lex.multiply:
-			return accum + actionMul(number, expression[i:])
+			res, offset := actionMul(number, expression[pos:])
+
+			accum += res
+
+			pos += offset
 		case lex.divide:
-			return accum + actionDiv(number, expression[i:])
+			res, offset := actionDiv(number, expression[pos:])
+
+			accum += res
+
+			pos += offset
 		}
 	}
 
-	return accum
+	return accum, pos
 }
 
-func actionSub(accum float64, expression string) float64 {
-	fmt.Println("SubAction:", accum, expression)
-	var i int = 0
+func actionSub(accum float64, expression string) (float64, int) {
+	fmt.Println("Sub", accum, expression)
+	var pos int = 0
 
-	for i < len(expression) {
-		number, lengthNumber := GetNumber(expression[i:])
-		i += lengthNumber
+	for pos < len(expression) {
+		number, lengthNumber := GetNumber(expression[pos:])
+		pos += lengthNumber
 
-		if len(expression) == i {
-			return accum - number
+		if len(expression) == pos {
+			return accum - number, pos
 		}
 
-		symbol := string(expression[i])
-		i++
+		symbol := string(expression[pos])
+		pos++
 
 		switch symbol {
 		case lex.plus:
-			return actionSum(-number+accum, expression[i:])
+			res, offset := actionSum(-number, expression[pos:])
+
+			accum += res
+
+			pos += offset
 		case lex.minus:
 			accum -= number
 		case lex.multiply:
-			return actionMul(-number*accum, expression[i:])
+			res, offset := actionMul(-number, expression[pos:])
+
+			accum += res
+
+			pos += offset
 		case lex.divide:
-			return actionDiv(-number*accum, expression[i:])
+			res, offset := actionDiv(-number, expression[pos:])
+
+			accum += res
+
+			pos += offset
 		}
 	}
 
-	return accum
+	return accum, pos
 }
 
 func InitCalculate(expression string) float64 {
-	return actionSum(0, expression)
+	res, _ := actionSum(0, expression)
+	return res
 }
