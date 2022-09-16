@@ -1,12 +1,14 @@
-package parser
+package actions
 
 import (
+	"Modules/project/calc/parser/configs"
+	"errors"
 	"strconv"
 	"strings"
 )
 
 func isDigit(value string) bool {
-	if strings.Contains(lex.digit, value) || value == "." {
+	if strings.Contains(configs.Lex.Digit, value) || value == "." {
 		return true
 	}
 
@@ -17,7 +19,7 @@ func GetNumber(expression string) (float64, int) {
 	//  fmt.Println(expression)
 	var iter = 0
 
-	if string(expression[0]) == lex.minus {
+	if string(expression[0]) == configs.Lex.Minus {
 		iter = 1
 	}
 
@@ -42,4 +44,19 @@ func GetNumber(expression string) (float64, int) {
 	}
 
 	return 0, 0
+}
+
+func getEndExpression(expression string) (int, error) {
+	for {
+		posClose := strings.Index(expression, configs.Lex.CloseParen)
+		if posClose == -1 {
+			return 0, errors.New("bad expression: no close paren")
+		}
+
+		posOpen := strings.Index(expression, configs.Lex.OpenParen)
+
+		if posClose < posOpen || posOpen == -1 {
+			return posClose, nil
+		}
+	}
 }

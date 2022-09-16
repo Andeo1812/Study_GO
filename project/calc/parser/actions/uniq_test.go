@@ -1,4 +1,4 @@
-package parser
+package actions
 
 import (
 	"github.com/stretchr/testify/require"
