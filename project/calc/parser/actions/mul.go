@@ -22,18 +22,12 @@ func actionMul(accum float64, expression string) (float64, int) {
 
 		switch symbol {
 		case configs.Lex.Plus:
-			accum *= number
-
-			res, offset := actionSum(accum, expression[pos:])
-
+			res, offset := actionSum(accum*number, expression[pos:])
 			pos += offset
 
 			return res, pos
 		case configs.Lex.Minus:
-			accum *= number
-
-			res, offset := actionSub(accum, expression[pos:])
-
+			res, offset := actionSub(accum*number, expression[pos:])
 			pos += offset
 
 			return res, pos
@@ -41,9 +35,7 @@ func actionMul(accum float64, expression string) (float64, int) {
 			accum *= number
 		case configs.Lex.Divide:
 			res, offset := actionDiv(accum*number, expression[pos:])
-
 			accum = res
-
 			pos += offset
 		}
 	}
