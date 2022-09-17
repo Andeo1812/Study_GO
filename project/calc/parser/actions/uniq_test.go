@@ -22,16 +22,19 @@ func TestGetNumber(t *testing.T) {
 func TestGetEndExpression(t *testing.T) {
 	var input string = "()())"
 	var output int = 4
-	pos := GetEndExpression(input)
+	pos, errorGet := GetEndExpression(input)
+	require.Nil(t, errorGet)
 	require.Equal(t, pos, output, "they should be equal", input)
 
 	input = "((())))"
 	output = 6
-	pos = GetEndExpression(input)
+	pos, errorGet = GetEndExpression(input)
+	require.Nil(t, errorGet)
 	require.Equal(t, pos, output, "they should be equal", input)
 
 	input = "012()56)"
 	output = 7
-	pos = GetEndExpression(input)
+	pos, errorGet = GetEndExpression(input)
+	require.Nil(t, errorGet)
 	require.Equal(t, pos, output, "they should be equal", input)
 }

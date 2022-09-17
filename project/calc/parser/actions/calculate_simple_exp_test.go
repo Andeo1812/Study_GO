@@ -137,4 +137,28 @@ func TestBadInput(t *testing.T) {
 	var input string = "123+21323dsagfa"
 	_, error_ := InitCalculate(input)
 	require.NotNil(t, error_, "this is error", input)
+
+	input = "123/21323dsagfa"
+	_, error_ = InitCalculate(input)
+	require.NotNil(t, error_, "this is error", input)
+
+	input = "123*21323dsagfa"
+	_, error_ = InitCalculate(input)
+	require.NotNil(t, error_, "this is error", input)
+
+	input = "1+123-21323dsagfa"
+	_, error_ = InitCalculate(input)
+	require.NotNil(t, error_, "this is error", input)
+
+	input = "1-123*21323dsagfa"
+	_, error_ = InitCalculate(input)
+	require.NotNil(t, error_, "this is error", input)
+
+	input = "1*123*21323dsagfa"
+	_, error_ = InitCalculate(input)
+	require.NotNil(t, error_, "this is error", input)
+
+	input = "1/123-21323dsagfa"
+	_, error_ = InitCalculate(input)
+	require.NotNil(t, error_, "this is error", input)
 }

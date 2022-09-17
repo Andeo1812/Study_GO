@@ -8,7 +8,10 @@ func actionOpenOperand(expression string) (float64, int, error) {
 	var pos int
 	if string(expression[pos]) == configs.Lex.OpenParen {
 		pos++
-		posEnd := GetEndExpression(expression[pos:])
+		posEnd, errGetEnd := GetEndExpression(expression[pos:])
+		if errGetEnd != nil {
+			return 0, 0, errGetEnd
+		}
 
 		addition, offset, err := actionSum(0, expression[pos:posEnd+1])
 		pos += offset

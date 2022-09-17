@@ -39,17 +39,17 @@ func GetNumber(expression string) (float64, int, error) {
 	return 0, 0, errors.New("wrong expression")
 }
 
-func GetEndExpression(expression string) int {
+func GetEndExpression(expression string) (int, error) {
 	var countOpen int = 1
 
 	posClose := strings.Index(expression, configs.Lex.CloseParen)
 	if posClose == -1 {
-		panic("wrong expression")
+		return 0, errors.New("wrong expression")
 	}
 
 	posOpen := strings.Index(expression, configs.Lex.OpenParen)
 	if posOpen == -1 {
-		return posClose
+		return posClose, nil
 	}
 
 	for ind, val := range expression {
@@ -61,13 +61,13 @@ func GetEndExpression(expression string) int {
 			countOpen--
 
 			if countOpen == 0 {
-				return ind
+				return ind, nil
 			}
 		}
 
 	}
 
-	return 0
+	return 0, errors.New("wrong expression")
 }
 
 func wrongSymbol(symbol string) string {
