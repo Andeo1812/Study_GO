@@ -10,34 +10,48 @@ func actionSum(accum float64, expression string) (float64, int) {
 	var pos int = 0
 
 	for pos < len(expression) {
-		number, lengthNumber := GetNumber(expression[pos:])
-		pos += lengthNumber
+		fmt.Println("SumBegin", string(expression[pos:]))
+		fmt.Println("SumBegin", string(expression[pos]))
+		if string(expression[pos]) == configs.Lex.CloseParen {
+			if string(expression[pos]) == configs.Lex.Plus {
+				return accum, pos
+			}
+			return accum, pos + 1
+		}
+
+		addition, offset := actionOpenOperand(expression[pos:])
+		pos += offset
 
 		if len(expression) == pos {
-			return accum + number, pos
+			return accum + addition, pos
 		}
 
 		symbol := string(expression[pos])
 		pos++
 
-		var res float64
-		var offset int
+		fmt.Println("Sum:", symbol)
 
 		switch symbol {
 		case configs.Lex.Plus:
-			accum += number
+			accum += addition
 		case configs.Lex.Minus:
-			res, offset = actionSub(number, expression[pos:])
+			res, offset := actionSub(addition, expression[pos:])
+			accum += res
+			pos += offset
 		case configs.Lex.Multiply:
-			res, offset = actionMul(number, expression[pos:])
+			res, offset := actionMul(addition, expression[pos:])
+			accum += res
+			pos += offset
 		case configs.Lex.Divide:
-			res, offset = actionDiv(number, expression[pos:])
-		case configs.Lex.OpenParen:
-
+			res, offset := actionDiv(addition, expression[pos:])
+			accum += res
+			pos += offset
+		case configs.Lex.CloseParen:
+			fmt.Println("SumCloseBefore:", string(expression[pos]))
+			pos--
+			fmt.Println("SumCloseAfter:", string(expression[pos]))
+			return accum + addition, pos
 		}
-
-		accum += res
-		pos += offset
 	}
 
 	return accum, pos
