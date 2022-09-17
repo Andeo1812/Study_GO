@@ -2,55 +2,58 @@ package actions
 
 import (
 	"Modules/project/calc/parser/configs"
-	"fmt"
+	"errors"
 )
 
-func actionSum(accum float64, expression string) (float64, int) {
-	fmt.Println("Sum:", accum, expression)
+func actionSum(accum float64, expression string) (float64, int, error) {
 	var pos int = 0
 
 	for pos < len(expression) {
-		if string(expression[pos]) == configs.Lex.CloseParen {
-			return accum, pos + 1
+		addition, offset, errGetOperand := actionOpenOperand(expression[pos:])
+		if errGetOperand != nil {
+			return 0, 0, errGetOperand
 		}
 
-		addition, offset := actionOpenOperand(expression[pos:])
 		pos += offset
 
 		if len(expression) == pos {
-			return accum + addition, pos
+			return accum + addition, pos, nil
 		}
 
 		symbol := string(expression[pos])
 		pos++
 
-		fmt.Println("Sum:", symbol)
-
 		switch symbol {
 		case configs.Lex.Plus:
 			accum += addition
 		case configs.Lex.Minus:
-			res, offset := actionSub(addition, expression[pos:])
+			res, offset, errSub := actionSub(addition, expression[pos:])
+			if errSub != nil {
+				return 0, 0, errSub
+			}
+
 			accum += res
 			pos += offset
 		case configs.Lex.Multiply:
-			res, offset := actionMul(addition, expression[pos:])
+			res, offset, errMul := actionMul(addition, expression[pos:])
+			if errMul != nil {
+				return 0, 0, errMul
+			}
+
 			accum += res
 			pos += offset
 		case configs.Lex.Divide:
-			res, offset := actionDiv(addition, expression[pos:])
+			res, offset, errDiv := actionDiv(addition, expression[pos:])
+			if errDiv != nil {
+				return 0, 0, errDiv
+			}
+
 			accum += res
 			pos += offset
-		case configs.Lex.CloseParen:
-			fmt.Println("SumClose:", expression[pos:])
-			if expression[pos:] == "" ||
-				string(expression[pos]) == configs.Lex.Plus || string(expression[pos]) == configs.Lex.Minus || string(expression[pos]) == configs.Lex.Multiply || string(expression[pos]) == configs.Lex.Divide {
-				fmt.Println("SumCloseBingo:", expression[pos:])
-				return accum + addition, pos
-			}
-			return accum + addition, pos - 1
+		default:
+			return 0, 0, errors.New(wrongSymbol(symbol))
 		}
 	}
 
-	return accum, pos
+	return accum, pos, nil
 }

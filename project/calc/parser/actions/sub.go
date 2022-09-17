@@ -2,23 +2,22 @@ package actions
 
 import (
 	"Modules/project/calc/parser/configs"
-	"fmt"
+	"errors"
 )
 
-func actionSub(accum float64, expression string) (float64, int) {
-	fmt.Println("Sub", accum, expression)
+func actionSub(accum float64, expression string) (float64, int, error) {
 	var pos int = 0
 
 	for pos < len(expression) {
-		if string(expression[pos]) == configs.Lex.CloseParen {
-			return accum, pos + 1
+		addition, offset, errGetOperand := actionOpenOperand(expression[pos:])
+		if errGetOperand != nil {
+			return 0, 0, errGetOperand
 		}
 
-		addition, offset := actionOpenOperand(expression[pos:])
 		pos += offset
 
 		if len(expression) == pos {
-			return accum - addition, pos
+			return accum - addition, pos, nil
 		}
 
 		symbol := string(expression[pos])
@@ -26,28 +25,35 @@ func actionSub(accum float64, expression string) (float64, int) {
 
 		switch symbol {
 		case configs.Lex.Plus:
-			res, offset := actionSum(-addition, expression[pos:])
+			res, offset, errSum := actionSum(-addition, expression[pos:])
+			if errSum != nil {
+				return 0, 0, errSum
+			}
+
 			accum += res
 			pos += offset
 		case configs.Lex.Minus:
 			accum -= addition
 		case configs.Lex.Multiply:
-			res, offset := actionMul(-addition, expression[pos:])
+			res, offset, errMul := actionMul(-addition, expression[pos:])
+			if errMul != nil {
+				return 0, 0, errMul
+			}
+
 			accum += res
 			pos += offset
 		case configs.Lex.Divide:
-			res, offset := actionDiv(-addition, expression[pos:])
+			res, offset, errDiv := actionDiv(-addition, expression[pos:])
+			if errDiv != nil {
+				return 0, 0, errDiv
+			}
+
 			accum += res
 			pos += offset
-		case configs.Lex.CloseParen:
-			if expression[pos:] == "" ||
-				string(expression[pos]) == configs.Lex.Plus || string(expression[pos]) == configs.Lex.Minus || string(expression[pos]) == configs.Lex.Multiply || string(expression[pos]) == configs.Lex.Divide {
-				return accum + addition, pos
-			}
-			return accum + addition, pos - 1
-
+		default:
+			return 0, 0, errors.New(wrongSymbol(symbol))
 		}
 	}
 
-	return accum, pos
+	return accum, pos, nil
 }
