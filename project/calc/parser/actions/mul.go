@@ -2,16 +2,12 @@ package actions
 
 import (
 	"Modules/project/calc/parser/configs"
-	"fmt"
 )
 
 func actionMul(accum float64, expression string) (float64, int) {
-	fmt.Println("Mul:", accum, expression)
 	var pos int = 0
 
 	for pos < len(expression) {
-		fmt.Println("MulBegin", string(expression[pos:]))
-		fmt.Println("MulBegin", string(expression[pos]))
 		if string(expression[pos]) == configs.Lex.CloseParen {
 			return accum, pos + 1
 		}
@@ -25,8 +21,6 @@ func actionMul(accum float64, expression string) (float64, int) {
 
 		symbol := string(expression[pos])
 		pos++
-
-		fmt.Println("Mul:", symbol)
 
 		switch symbol {
 		case configs.Lex.Plus:
@@ -47,7 +41,6 @@ func actionMul(accum float64, expression string) (float64, int) {
 			pos += offset
 		case configs.Lex.CloseParen:
 			pos--
-			fmt.Println("MULClose:", string(expression[pos]))
 			return accum * addition, pos
 		}
 	}

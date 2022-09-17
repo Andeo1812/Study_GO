@@ -10,12 +10,7 @@ func actionSum(accum float64, expression string) (float64, int) {
 	var pos int = 0
 
 	for pos < len(expression) {
-		fmt.Println("SumBegin", string(expression[pos:]))
-		fmt.Println("SumBegin", string(expression[pos]))
 		if string(expression[pos]) == configs.Lex.CloseParen {
-			if string(expression[pos]) == configs.Lex.Plus {
-				return accum, pos
-			}
 			return accum, pos + 1
 		}
 
@@ -47,10 +42,13 @@ func actionSum(accum float64, expression string) (float64, int) {
 			accum += res
 			pos += offset
 		case configs.Lex.CloseParen:
-			fmt.Println("SumCloseBefore:", string(expression[pos]))
-			pos--
-			fmt.Println("SumCloseAfter:", string(expression[pos]))
-			return accum + addition, pos
+			fmt.Println("SumClose:", expression[pos:])
+			if expression[pos:] == "" ||
+				string(expression[pos]) == configs.Lex.Plus || string(expression[pos]) == configs.Lex.Minus || string(expression[pos]) == configs.Lex.Multiply || string(expression[pos]) == configs.Lex.Divide {
+				fmt.Println("SumCloseBingo:", expression[pos:])
+				return accum + addition, pos
+			}
+			return accum + addition, pos - 1
 		}
 	}
 
