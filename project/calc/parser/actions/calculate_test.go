@@ -54,6 +54,11 @@ func TestDivideParens(t *testing.T) {
 	output = 5
 	resExpression, _ = InitCalculate(input)
 	require.Equal(t, output, resExpression, "they should be equal", input)
+
+	input = "100/(3-3)/(3+2)"
+	output = 5
+	_, errCalc := InitCalculate(input)
+	require.NotNil(t, errCalc)
 }
 
 func TestCombinationParens(t *testing.T) {

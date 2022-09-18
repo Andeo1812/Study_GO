@@ -14,6 +14,10 @@ func actionDiv(accum float64, expression string) (float64, int, error) {
 			return 0, 0, errGetOperand
 		}
 
+		if addition == 0 {
+			return 0, 0, errors.New("divide on zero")
+		}
+
 		pos += offset
 
 		if len(expression) == pos {

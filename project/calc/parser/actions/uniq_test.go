@@ -17,6 +17,10 @@ func TestGetNumber(t *testing.T) {
 	number, length, _ = GetNumber(input)
 	require.Equal(t, length, 2, "they should be equal", input)
 	require.Equal(t, output, number, "they should be equal", input)
+
+	input = "basd"
+	_, _, errGet := GetNumber(input)
+	require.NotNil(t, errGet)
 }
 
 func TestGetEndExpression(t *testing.T) {
