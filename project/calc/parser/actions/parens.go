@@ -4,7 +4,7 @@ import (
 	"Modules/project/calc/parser/configs"
 )
 
-func actionOpenOperand(expression string) (float64, int, error) {
+func actionGetOperand(expression string) (float64, int, error) {
 	var pos int
 	if string(expression[pos]) == configs.Lex.OpenParen {
 		pos++

@@ -9,7 +9,7 @@ func actionSub(accum float64, expression string) (float64, int, error) {
 	var pos int = 0
 
 	for pos < len(expression) {
-		addition, offset, errGetOperand := actionOpenOperand(expression[pos:])
+		addition, offset, errGetOperand := actionGetOperand(expression[pos:])
 		if errGetOperand != nil {
 			return 0, 0, errGetOperand
 		}
