@@ -19,10 +19,6 @@ func isDigit(value string) bool {
 func GetNumber(expression string) (float64, int, error) {
 	var iter = 0
 
-	if string(expression[0]) == configs.Lex.Minus {
-		iter = 1
-	}
-
 	for ; iter < len(expression); iter++ {
 		if !isDigit(string(expression[iter])) {
 			res, resConversation := strconv.ParseFloat(expression[:iter], 64)
