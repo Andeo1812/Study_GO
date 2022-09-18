@@ -29,20 +29,29 @@ func actionDiv(accum float64, expression string) (float64, int, error) {
 
 		switch symbol {
 		case configs.Lex.Plus:
-			res, offset, err := actionSum(accum/addition, expression[pos:])
+			res, offset, errSum := actionSum(accum/addition, expression[pos:])
+			if errSum != nil {
+				return 0, 0, errSum
+			}
+
 			pos += offset
 
-			return res, pos, err
+			return res, pos, nil
 		case configs.Lex.Minus:
-			res, offset, err := actionSub(accum/addition, expression[pos:])
+			res, offset, errSub := actionSub(accum/addition, expression[pos:])
+			if errSub != nil {
+				return 0, 0, errSub
+			}
+
 			pos += offset
 
-			return res, pos, err
+			return res, pos, nil
 		case configs.Lex.Multiply:
 			res, offset, errMul := actionMul(accum/addition, expression[pos:])
 			if errMul != nil {
 				return 0, 0, errMul
 			}
+
 			accum = res
 			pos += offset
 		case configs.Lex.Divide:
