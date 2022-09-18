@@ -13,15 +13,23 @@ func actionOpenOperand(expression string) (float64, int, error) {
 			return 0, 0, errGetEnd
 		}
 
-		addition, offset, err := actionSum(0, expression[pos:posEnd+1])
+		addition, offset, errResExpression := actionSum(0, expression[pos:posEnd+1])
+		if errResExpression != nil {
+			return 0, 0, errResExpression
+		}
+
 		pos += offset
 		pos++
 
-		return addition, pos, err
+		return addition, pos, nil
 	}
 
-	number, lengthNumber, err := GetNumber(expression[pos:])
+	number, lengthNumber, errGet := GetNumber(expression[pos:])
+	if errGet != nil {
+		return 0, 0, errGet
+	}
+
 	pos += lengthNumber
 
-	return number, pos, err
+	return number, pos, nil
 }
