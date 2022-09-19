@@ -3,13 +3,13 @@ package actions
 import (
 	"Calc/project/calc/parser/configs"
 	"errors"
+	"strings"
 )
 
 func actionMul(accum float64, expression string) (float64, int, error) {
 	var pos int = 0
 
-	for pos < len(expression) {
-		strings.s
+	for pos < strings.Count(expression, "")-1 {
 		addition, offset, errGetOperand := actionGetOperand(expression[pos:])
 		if errGetOperand != nil {
 			return 0, 0, errGetOperand
@@ -17,7 +17,7 @@ func actionMul(accum float64, expression string) (float64, int, error) {
 
 		pos += offset
 
-		if len(expression) == pos {
+		if strings.Count(expression, "")-1 == pos {
 			return accum * addition, pos, nil
 		}
 
