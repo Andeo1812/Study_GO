@@ -13,24 +13,9 @@ func TestSum(t *testing.T) {
 }
 
 func TestSub(t *testing.T) {
-	var input string = "10-10"
-	var output float64 = 0
+	var input string = "10-10-1001"
+	var output float64 = -1001
 	resExpression, _ := Calculate(input)
-	require.Equal(t, output, resExpression, "they should be equal", input)
-
-	input = "10-10-1001"
-	output = -1001
-	resExpression, _ = Calculate(input)
-	require.Equal(t, output, resExpression, "they should be equal", input)
-
-	input = "10-100-110-10"
-	output = -210
-	resExpression, _ = Calculate(input)
-	require.Equal(t, output, resExpression, "they should be equal", input)
-
-	input = "10-10-10-10-10000"
-	output = -10020
-	resExpression, _ = Calculate(input)
 	require.Equal(t, output, resExpression, "they should be equal", input)
 }
 

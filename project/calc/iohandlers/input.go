@@ -3,7 +3,6 @@ package iohandlers
 import (
 	"bufio"
 	"os"
-	"strings"
 )
 
 func Input() string {
@@ -11,7 +10,5 @@ func Input() string {
 
 	scanner.Scan()
 
-	noSpacesExpr := strings.ReplaceAll(scanner.Text(), " ", "")
-
-	return noSpacesExpr
+	return scanner.Text()
 }
