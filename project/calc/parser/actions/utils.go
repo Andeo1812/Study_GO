@@ -19,7 +19,7 @@ func isDigit(value string) bool {
 func GetNumber(expression string) (float64, int, error) {
 	var iter = 0
 
-	for ; iter < len(expression); iter++ {
+	for ; iter < strings.Count(expression, "")-1; iter++ {
 		if !isDigit(string(expression[iter])) {
 			res, resConversation := strconv.ParseFloat(expression[:iter], 64)
 			return res, iter, resConversation
@@ -27,7 +27,7 @@ func GetNumber(expression string) (float64, int, error) {
 
 	}
 
-	if iter == len(expression) {
+	if iter == strings.Count(expression, "")-1 {
 		res, resConversation := strconv.ParseFloat(expression[:iter], 64)
 		return res, iter, resConversation
 	}
