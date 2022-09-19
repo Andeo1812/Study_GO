@@ -1,7 +1,7 @@
 package actions
 
 import (
-	"Modules/project/calc/parser/configs"
+	"Calc/project/calc/parser/configs"
 )
 
 func actionGetOperand(expression string) (float64, int, error) {
