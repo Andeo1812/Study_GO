@@ -27,6 +27,7 @@ func SingleHash(in, out chan interface{}) {
 		wg.Add(1)
 		go func(data string) {
 			defer wg.Done()
+
 			hashLeft := make(chan string)
 			hashRight := make(chan string)
 
