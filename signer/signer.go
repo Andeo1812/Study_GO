@@ -110,6 +110,7 @@ func ExecutePipeline(jobs ...job) {
 	for _, j := range jobs {
 		wg.Add(1)
 		go jobWorker(wg, j, in, out)
+
 		in = out
 		out = make(chan interface{})
 	}
