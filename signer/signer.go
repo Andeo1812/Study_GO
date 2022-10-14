@@ -75,9 +75,10 @@ func MultiHash(in, out chan interface{}) {
 					dataHashes[i] = DataSignerCrc32(strconv.Itoa(i) + data)
 				}(i)
 			}
-			workers.Wait()
-			out <- strings.Join(dataHashes, "")
 
+			workers.Wait()
+
+			out <- strings.Join(dataHashes, "")
 		}(value)
 	}
 
