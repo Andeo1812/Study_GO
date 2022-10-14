@@ -64,7 +64,7 @@ func MultiHash(in, out chan interface{}) {
 			defer wg.Done()
 			workers := &sync.WaitGroup{}
 
-			dataHashes := make([]string, 6)
+			hashes := make([]string, 6)
 
 			for i := 0; i < 6; i++ {
 				workers.Add(1)
@@ -72,13 +72,13 @@ func MultiHash(in, out chan interface{}) {
 				go func(i int) {
 					defer workers.Done()
 
-					dataHashes[i] = DataSignerCrc32(strconv.Itoa(i) + data)
+					hashes[i] = DataSignerCrc32(strconv.Itoa(i) + data)
 				}(i)
 			}
 
 			workers.Wait()
 
-			out <- strings.Join(dataHashes, "")
+			out <- strings.Join(hashes, "")
 		}(value)
 	}
 
