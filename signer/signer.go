@@ -8,6 +8,8 @@ import (
 	"sync"
 )
 
+const countPartsMultiHash = 6
+
 // SingleHash считает значение crc32(data)+"~"+crc32(md5(data)) ( конкатенация двух строк через ~),
 // где data - то что пришло на вход (по сути - числа из первой функции)
 func SingleHash(in, out chan interface{}) {
@@ -25,8 +27,8 @@ func SingleHash(in, out chan interface{}) {
 		wg.Add(1)
 		go func(data string) {
 			defer wg.Done()
-			hashLeft := make(chan string, 1)
-			hashRight := make(chan string, 1)
+			hashLeft := make(chan string)
+			hashRight := make(chan string)
 
 			go func() {
 				muMD.Lock()
@@ -64,9 +66,9 @@ func MultiHash(in, out chan interface{}) {
 			defer wg.Done()
 			workers := &sync.WaitGroup{}
 
-			hashes := make([]string, 6)
+			hashes := make([]string, countPartsMultiHash)
 
-			for i := 0; i < 6; i++ {
+			for i, _ := range hashes {
 				workers.Add(1)
 
 				go func(i int) {
