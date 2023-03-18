@@ -1,8 +1,6 @@
 package main
 
-import (
-	"Modules/project/once"
-)
+import "Modules/project/race"
 
 func asyncDemo() {
 	//  gorutines.Goroutines()
@@ -51,7 +49,9 @@ func asyncDemo() {
 
 	//  race.Race3()
 
-	once.Once()
+	race.Race4()
+
+	//  once.Once()
 }
 
 func main() {

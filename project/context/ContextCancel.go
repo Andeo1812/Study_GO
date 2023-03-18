@@ -14,10 +14,12 @@ func студент(ctx context.Context, workerNum int, out chan<- int) {
 
 	select {
 	case <-ctx.Done():
+		fmt.Println("студент", workerNum, "не успел придумать")
+
 		return
 	case <-time.After(waitTime):
 		fmt.Println("студент", workerNum, "придумал")
-		
+
 		out <- workerNum
 	}
 

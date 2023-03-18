@@ -44,12 +44,17 @@ func startWorker_(in int, wg *sync.WaitGroup, quotaCh chan struct{}) {
 
 func Ratelim() {
 	wg := &sync.WaitGroup{}
+
 	quotaCh := make(chan struct{}, quotaLimit) // ratelim.go
+
 	for i := 0; i < goroutinesNum_; i++ {
 		wg.Add(1)
+
 		go startWorker_(i, wg, quotaCh)
 	}
+
 	time.Sleep(time.Millisecond)
+	
 	wg.Wait()
 }
 
